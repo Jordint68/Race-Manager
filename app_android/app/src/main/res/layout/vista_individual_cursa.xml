@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ImageView
+        android:id="@+id/imvFoto"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:src="@drawable/imatge_predeterminada_cursa"
+        android:layout_margin="10dp"/>
+
+    <LinearLayout
+        android:id="@+id/lsvDades"
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/imvFoto"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_margin="10dp"
+        android:gravity="center_horizontal">
+
+        <TextView
+            android:id="@+id/txvNom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cursa predeterminada"
+            android:textColor="@color/black"
+            android:padding="5dp"/>
+
+        <TextView
+            android:id="@+id/txvData"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="19/01/2003"
+            android:textColor="@color/black"
+            android:padding="5dp"/>
+
+        <TextView
+            android:id="@+id/txvLloc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Igualada (Barcelona)"
+            android:textColor="@color/black"
+            android:padding="5dp"/>
+
+        <TextView
+            android:id="@+id/txvWebsite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="https://infomila.info"
+            android:textColor="@color/blue_link"
+            android:padding="5dp"/>
+    </LinearLayout>
+
+    <ImageButton
+        android:id="@+id/btnMostrarDetalls"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/lsvDades"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_margin="10dp"/>
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
