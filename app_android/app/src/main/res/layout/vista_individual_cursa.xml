@@ -58,14 +58,17 @@
             android:padding="5dp"/>
     </LinearLayout>
 
-    <ImageButton
+    <Button
+        android:backgroundTint="@color/black"
         android:id="@+id/btnMostrarDetalls"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/lsvDades"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_margin="10dp"/>
+        android:layout_margin="10dp"
+        android:text="Mostrar detalls"/>
+
 
 
 
