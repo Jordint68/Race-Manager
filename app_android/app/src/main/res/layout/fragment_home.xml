@@ -6,13 +6,34 @@
     android:layout_height="match_parent"
     tools:context=".ui.home.HomeFragment">
 
+    <LinearLayout
+        android:id="@+id/llLiniaDeCerca"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:orientation="horizontal">
+        
+        <EditText
+            android:id="@+id/edtCerca"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Introdueix el títol de la cursa"
+            android:paddingHorizontal="15dp"
+            android:paddingVertical="10dp"
+            android:drawableTint="@color/dark_red">
+        </EditText>
 
+
+    </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcvCurses"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
+        app:layout_constraintTop_toBottomOf="@id/llLiniaDeCerca"
+        app:layout_constraintStart_toStartOf="parent"
+        android:paddingBottom="50dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

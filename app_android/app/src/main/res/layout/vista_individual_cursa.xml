@@ -60,7 +60,7 @@
 
     <Button
         android:id="@+id/btnMostrarDetalls"
-        android:backgroundTint="@color/black"
+        android:backgroundTint="@color/dark_red"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/llDades"
