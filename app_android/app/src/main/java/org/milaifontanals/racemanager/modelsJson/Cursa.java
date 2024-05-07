@@ -7,7 +7,7 @@ import com.google.gson.annotations.SerializedName;
 
 import javax.annotation.processing.Generated;
 
-@Generated("jsonschema2pojo")
+
 public class Cursa {
 
     @SerializedName("id")
@@ -37,6 +37,9 @@ public class Cursa {
     @SerializedName("limit")
     @Expose
     private String limit;
+    @SerializedName("participants")
+    @Expose
+    private int participants;
     @SerializedName("foto")
     @Expose
     private String foto;

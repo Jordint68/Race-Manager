@@ -7,12 +7,11 @@ import com.google.gson.annotations.SerializedName;
 
 import javax.annotation.processing.Generated;
 
-@Generated("jsonschema2pojo")
 public class ResponseGetCurses {
     @SerializedName("curses")
     @Expose
     private List<Cursa> curses;
-    @SerializedName("response")
+    @SerializedName("status")
     @Expose
     private Response response;
 
