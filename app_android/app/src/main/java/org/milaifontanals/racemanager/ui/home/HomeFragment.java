@@ -10,10 +10,15 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.gson.Gson;
 
 import org.milaifontanals.racemanager.API.APIManager;
+import org.milaifontanals.racemanager.R;
+import org.milaifontanals.racemanager.adapters.CursesAdapter;
 import org.milaifontanals.racemanager.databinding.FragmentHomeBinding;
 import org.milaifontanals.racemanager.modelsJson.Cursa;
 import org.milaifontanals.racemanager.modelsJson.ResponseGetCurses;
@@ -27,6 +32,7 @@ import retrofit2.Response;
 public class HomeFragment extends Fragment {
 
     private FragmentHomeBinding binding;
+    private CursesAdapter adapter;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -45,10 +51,12 @@ public class HomeFragment extends Fragment {
             public void onResponse(Call<ResponseGetCurses> call, Response<ResponseGetCurses> response) {
                 // Si no té cap problema en connectar-se amb el webservice entrará per aquí
                 List<Cursa> curses = response.body().getCurses();
-                Gson gson = new Gson();
-                String json = gson.toJson(curses);
 
-                Log.d("XXX", json);
+                // Obtenim la llista de curses i la mostrem amb el recyclerview
+                adapter = new CursesAdapter(HomeFragment.this.getContext(), curses);
+                binding.rcvCurses.setLayoutManager(new GridLayoutManager(HomeFragment.this.getContext(), 2, LinearLayoutManager.VERTICAL, false));
+                binding.rcvCurses.setAdapter(adapter);
+
             }
 
             @Override

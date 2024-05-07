@@ -15,7 +15,7 @@
         android:layout_margin="10dp"/>
 
     <LinearLayout
-        android:id="@+id/lsvDades"
+        android:id="@+id/llDades"
         android:orientation="vertical"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -59,11 +59,11 @@
     </LinearLayout>
 
     <Button
-        android:backgroundTint="@color/black"
         android:id="@+id/btnMostrarDetalls"
+        android:backgroundTint="@color/black"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/lsvDades"
+        app:layout_constraintTop_toBottomOf="@id/llDades"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_margin="10dp"
