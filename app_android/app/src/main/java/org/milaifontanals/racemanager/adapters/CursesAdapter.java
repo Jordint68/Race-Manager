@@ -9,22 +9,31 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.navigation.NavController;
+import androidx.navigation.NavDirections;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import org.milaifontanals.racemanager.R;
 import org.milaifontanals.racemanager.modelsJson.Cursa;
+import org.milaifontanals.racemanager.ui.home.HomeFragment;
+import org.milaifontanals.racemanager.ui.home.HomeFragmentDirections;
 
 import java.util.List;
 
 public class CursesAdapter extends RecyclerView.Adapter<CursesAdapter.GridViewHolder> {
+    private Fragment fragHome;
     private List<Cursa> lCurses;
     private Context mContext;
 
-    public CursesAdapter(Context c, List<Cursa> curses) {
+    public CursesAdapter(Context c, List<Cursa> curses, Fragment frag) {
         this.lCurses = curses;
         this.mContext = c;
+        this.fragHome = frag;
     }
 
     @NonNull
@@ -39,10 +48,16 @@ public class CursesAdapter extends RecyclerView.Adapter<CursesAdapter.GridViewHo
         Cursa cursaActual = lCurses.get(position);
         holder.txvNom.setText(cursaActual.getNom());
         holder.txvLloc.setText(cursaActual.getLloc());
-        holder.txvData.setText(cursaActual.getDataInici() + " - " + cursaActual.getDataFi());
+        holder.txvData.setText(cursaActual.getDataInici() + " / " + cursaActual.getDataFi());
         holder.txvWebsite.setText(cursaActual.getWeb());
         String imgUrl = cursaActual.getFoto().toString();
         ImageLoader.getInstance().displayImage(imgUrl, holder.imvFoto);
+
+        holder.btnMostrarDetalls.setOnClickListener(view -> {
+            NavController nav = NavHostFragment.findNavController(fragHome);
+            NavDirections n = HomeFragmentDirections.actionNavigationHomeToDetallsFragment2(cursaActual);
+            nav.navigate(R.id.action_navigation_home_to_detallsFragment2);
+        });
     }
 
     @Override
@@ -68,4 +83,6 @@ public class CursesAdapter extends RecyclerView.Adapter<CursesAdapter.GridViewHo
             btnMostrarDetalls = vista.findViewById(R.id.btnMostrarDetalls);
         }
     }
+
+
 }

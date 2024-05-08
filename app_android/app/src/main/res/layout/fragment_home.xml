@@ -13,7 +13,8 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp">
         
         <EditText
             android:id="@+id/edtCerca"
@@ -24,6 +25,12 @@
             android:paddingVertical="10dp"
             android:drawableTint="@color/dark_red">
         </EditText>
+        
+        <ImageButton
+            android:id="@+id/imbCerca"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/icon_search" />
 
 
     </LinearLayout>
@@ -34,6 +41,6 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/llLiniaDeCerca"
         app:layout_constraintStart_toStartOf="parent"
-        android:paddingBottom="50dp"/>
+        android:paddingBottom="100dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -4,10 +4,12 @@ package org.milaifontanals.racemanager.modelsJson;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
+
 import javax.annotation.processing.Generated;
 
 @Generated("jsonschema2pojo")
-public class Esport {
+public class Esport implements Serializable{
 
     @SerializedName("id")
     @Expose

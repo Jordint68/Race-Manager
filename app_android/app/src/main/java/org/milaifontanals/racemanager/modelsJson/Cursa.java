@@ -5,10 +5,12 @@ package org.milaifontanals.racemanager.modelsJson;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
+
 import javax.annotation.processing.Generated;
 
 
-public class Cursa {
+public class Cursa implements Serializable {
 
     @SerializedName("id")
     @Expose

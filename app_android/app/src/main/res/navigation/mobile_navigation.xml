@@ -9,17 +9,28 @@
         android:id="@+id/navigation_home"
         android:name="org.milaifontanals.racemanager.ui.home.HomeFragment"
         android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_navigation_home_to_detallsFragment2"
+            app:destination="@id/detallsFragment2" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_dashboard"
         android:name="org.milaifontanals.racemanager.ui.dashboard.DashboardFragment"
         android:label="@string/title_dashboard"
         tools:layout="@layout/fragment_dashboard" />
-
     <fragment
-        android:id="@+id/navigation_notifications"
-        android:name="org.milaifontanals.racemanager.ui.notifications.NotificationsFragment"
-        android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
+        android:id="@+id/detallsFragment2"
+        android:name="org.milaifontanals.racemanager.ui.detalls.detallsFragment"
+        android:label="fragment_detalls"
+        tools:layout="@layout/fragment_detalls" >
+        <argument
+            android:name="Cursa"
+            app:argType="org.milaifontanals.racemanager.modelsJson.Cursa" />
+        <action
+            android:id="@+id/action_detallsFragment2_to_navigation_home"
+            app:destination="@id/navigation_home" />
+    </fragment>
+
 </navigation>
