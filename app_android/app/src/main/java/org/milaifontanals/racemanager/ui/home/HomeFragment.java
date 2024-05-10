@@ -3,6 +3,7 @@ package org.milaifontanals.racemanager.ui.home;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,11 +56,23 @@ public class HomeFragment extends Fragment {
 
         omplirRecyclerCurses(0, null);
 
-
         binding.imbCerca.setOnClickListener(view -> {
             String filtreNom = binding.edtCerca.getText().toString();
 
             omplirRecyclerCurses(0, filtreNom);
+        });
+
+        binding.edtCerca.setOnKeyListener(new View.OnKeyListener() {
+
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event){
+                if(keyCode==KeyEvent.KEYCODE_ENTER){
+                    String filtreNom = binding.edtCerca.getText().toString();
+                    omplirRecyclerCurses(0, filtreNom);
+                    return true;
+                }
+                return false;
+            }
         });
 
         return root;

@@ -1,6 +1,7 @@
 package org.milaifontanals.racemanager.adapters;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +22,6 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import org.milaifontanals.racemanager.R;
 import org.milaifontanals.racemanager.modelsJson.Cursa;
 import org.milaifontanals.racemanager.ui.home.HomeFragment;
-import org.milaifontanals.racemanager.ui.home.HomeFragmentDirections;
 
 import java.util.List;
 
@@ -48,15 +48,17 @@ public class CursesAdapter extends RecyclerView.Adapter<CursesAdapter.GridViewHo
         Cursa cursaActual = lCurses.get(position);
         holder.txvNom.setText(cursaActual.getNom());
         holder.txvLloc.setText(cursaActual.getLloc());
-        holder.txvData.setText(cursaActual.getDataInici() + " / " + cursaActual.getDataFi());
+        holder.txvData.setText(cursaActual.getDataInici());
         holder.txvWebsite.setText(cursaActual.getWeb());
         String imgUrl = cursaActual.getFoto().toString();
         ImageLoader.getInstance().displayImage(imgUrl, holder.imvFoto);
 
         holder.btnMostrarDetalls.setOnClickListener(view -> {
             NavController nav = NavHostFragment.findNavController(fragHome);
-            NavDirections n = HomeFragmentDirections.actionNavigationHomeToDetallsFragment2(cursaActual);
-            nav.navigate(R.id.action_navigation_home_to_detallsFragment2);
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("Cursa", cursaActual);
+//            NavDirections n = HomeFragmentDirections.actionNavigationHomeToDetallsFragment2();
+            nav.navigate(R.id.action_navigation_home_to_infoCursaFragment, bundle);
         });
     }
 

@@ -55,7 +55,8 @@
             android:layout_height="wrap_content"
             android:text="https://infomila.info"
             android:textColor="@color/blue_link"
-            android:padding="5dp"/>
+            android:padding="5dp"
+            android:textStyle="italic"/>
     </LinearLayout>
 
     <Button
