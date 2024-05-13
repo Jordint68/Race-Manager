@@ -1,5 +1,6 @@
 package org.milaifontanals.racemanager.API;
 
+import org.milaifontanals.racemanager.modelsJson.ResponseGetCircuits;
 import org.milaifontanals.racemanager.modelsJson.ResponseGetCurses;
 
 import retrofit2.Call;
@@ -34,6 +35,11 @@ public class APIManager {
 
     public void getCurses(int codi_cursa, Callback<ResponseGetCurses> cb) {
         Call<ResponseGetCurses> call = mApiService.getCurses(codi_cursa);
+        call.enqueue(cb);
+    }
+
+    public void getCircuits(int codi_cursa, Callback<ResponseGetCircuits> cb) {
+        Call<ResponseGetCircuits> call = mApiService.getCircuits(codi_cursa);
         call.enqueue(cb);
     }
 

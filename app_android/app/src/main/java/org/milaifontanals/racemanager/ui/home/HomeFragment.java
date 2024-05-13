@@ -68,6 +68,7 @@ public class HomeFragment extends Fragment {
             public boolean onKey(View v, int keyCode, KeyEvent event){
                 if(keyCode==KeyEvent.KEYCODE_ENTER){
                     String filtreNom = binding.edtCerca.getText().toString();
+                    binding.edtCerca.clearFocus();
                     omplirRecyclerCurses(0, filtreNom);
                     return true;
                 }

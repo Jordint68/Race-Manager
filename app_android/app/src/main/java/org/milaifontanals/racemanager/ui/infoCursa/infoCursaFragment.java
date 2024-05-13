@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,13 +13,25 @@ import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 
+import org.milaifontanals.racemanager.API.APIManager;
 import org.milaifontanals.racemanager.R;
 import org.milaifontanals.racemanager.databinding.FragmentInfoCursaBinding;
+import org.milaifontanals.racemanager.modelsJson.Circuit;
 import org.milaifontanals.racemanager.modelsJson.Cursa;
+import org.milaifontanals.racemanager.modelsJson.ResponseGetCircuits;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class infoCursaFragment extends Fragment {
     private Cursa cursa;
     private FragmentInfoCursaBinding mBinding;
+
+    private List<Circuit> lCircuits = new ArrayList<>();
 
 
     public infoCursaFragment() {
@@ -37,7 +50,6 @@ public class infoCursaFragment extends Fragment {
         Bundle bundle = this.getArguments();
         if (bundle != null) {
             cursa = (Cursa) bundle.getSerializable("Cursa");
-
         }
     }
 
@@ -59,6 +71,22 @@ public class infoCursaFragment extends Fragment {
 
         mostrarDades();
 
+        carregar_cc();
+
         return mBinding.getRoot();
+    }
+
+    private void carregar_cc() {
+        APIManager.getInstance().getCircuits(Integer.parseInt(cursa.getId()), new Callback<ResponseGetCircuits>() {
+            @Override
+            public void onResponse(Call<ResponseGetCircuits> call, Response<ResponseGetCircuits> response) {
+                lCircuits = response.body().getCircuits();
+            }
+
+            @Override
+            public void onFailure(Call<ResponseGetCircuits> call, Throwable t) {
+
+            }
+        });
     }
 }

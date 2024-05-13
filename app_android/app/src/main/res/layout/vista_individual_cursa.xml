@@ -3,7 +3,6 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-
     <ImageView
         android:id="@+id/imvFoto"
         android:layout_width="100dp"
@@ -56,6 +55,15 @@
             android:text="https://infomila.info"
             android:textColor="@color/blue_link"
             android:padding="5dp"
+            android:textStyle="italic"/>
+
+        <TextView
+            android:id="@+id/txvEsport"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Furbo"
+            android:textColor="@color/black"
+            android:padding="7dp"
             android:textStyle="italic"/>
     </LinearLayout>
 

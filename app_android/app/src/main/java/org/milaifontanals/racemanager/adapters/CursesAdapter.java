@@ -50,6 +50,7 @@ public class CursesAdapter extends RecyclerView.Adapter<CursesAdapter.GridViewHo
         holder.txvLloc.setText(cursaActual.getLloc());
         holder.txvData.setText(cursaActual.getDataInici());
         holder.txvWebsite.setText(cursaActual.getWeb());
+        holder.txvEsport.setText(cursaActual.getEsport().getNom());
         String imgUrl = cursaActual.getFoto().toString();
         ImageLoader.getInstance().displayImage(imgUrl, holder.imvFoto);
 
@@ -73,6 +74,7 @@ public class CursesAdapter extends RecyclerView.Adapter<CursesAdapter.GridViewHo
         TextView txvData;
         TextView txvLloc;
         TextView txvWebsite;
+        TextView txvEsport;
         Button btnMostrarDetalls;
 
         public GridViewHolder(@NonNull View vista) {
@@ -82,6 +84,7 @@ public class CursesAdapter extends RecyclerView.Adapter<CursesAdapter.GridViewHo
             txvData = vista.findViewById(R.id.txvData);
             txvLloc = vista.findViewById(R.id.txvLloc);
             txvWebsite = vista.findViewById(R.id.txvWebsite);
+            txvEsport = vista.findViewById(R.id.txvEsport);
             btnMostrarDetalls = vista.findViewById(R.id.btnMostrarDetalls);
         }
     }

@@ -1,5 +1,6 @@
 package org.milaifontanals.racemanager.API;
 
+import org.milaifontanals.racemanager.modelsJson.ResponseGetCircuits;
 import org.milaifontanals.racemanager.modelsJson.ResponseGetCurses;
 
 import retrofit2.Call;
@@ -13,6 +14,8 @@ public interface API {
             @Query("cursa_id") int id
     );
 
-
-
+    @GET("JSON_doc/getCircuits/getCircuitsRS.json")
+    Call<ResponseGetCircuits> getCircuits(
+            @Query("cursa_id") int id
+    );
 }
