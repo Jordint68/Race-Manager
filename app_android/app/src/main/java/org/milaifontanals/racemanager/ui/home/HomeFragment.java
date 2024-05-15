@@ -87,6 +87,7 @@ public class HomeFragment extends Fragment {
                 // Si no té cap problema en connectar-se amb el webservice entrará per aquí
                 List<Cursa> curses = response.body().getCurses();
 
+                // Filtre pel nom
                 if (filtreNom != null) {
                     if (!(filtreNom.equals(""))) {
                         curses = filtreCursesPerNom(curses, filtreNom);
@@ -99,6 +100,7 @@ public class HomeFragment extends Fragment {
                     binding.edtCerca.setHint("Introdueix el títol de la cursa");
                 }
 
+                // Ordenar les curses
                 curses = ordenarPerData(curses);
 
                 // Obtenim la llista de curses i la mostrem amb el recyclerview

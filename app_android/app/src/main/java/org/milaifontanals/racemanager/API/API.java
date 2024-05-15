@@ -10,8 +10,9 @@ import retrofit2.http.Query;
 public interface API {
 
     @GET("JSON_doc/getCurses/getCursesRS.json")
+//    @GET("getCurses")
     Call<ResponseGetCurses> getCurses(
-            @Query("cursa_id") int id
+            @Query("cursa_id") int id  
     );
 
     @GET("JSON_doc/getCircuits/getCircuitsRS.json")

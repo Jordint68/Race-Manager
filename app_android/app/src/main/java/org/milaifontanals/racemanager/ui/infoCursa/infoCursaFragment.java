@@ -3,6 +3,7 @@ package org.milaifontanals.racemanager.ui.infoCursa;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,6 +16,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 
 import org.milaifontanals.racemanager.API.APIManager;
 import org.milaifontanals.racemanager.R;
+import org.milaifontanals.racemanager.adapters.CircuitsAdapter;
 import org.milaifontanals.racemanager.databinding.FragmentInfoCursaBinding;
 import org.milaifontanals.racemanager.modelsJson.Circuit;
 import org.milaifontanals.racemanager.modelsJson.Cursa;
@@ -30,6 +32,7 @@ import retrofit2.Response;
 public class infoCursaFragment extends Fragment {
     private Cursa cursa;
     private FragmentInfoCursaBinding mBinding;
+    private CircuitsAdapter mCircuitsAdapter;
 
     private List<Circuit> lCircuits = new ArrayList<>();
 
@@ -76,16 +79,23 @@ public class infoCursaFragment extends Fragment {
         return mBinding.getRoot();
     }
 
+    /*
+        Funció per a carregar les dades dels circuits i les categories
+     */
     private void carregar_cc() {
         APIManager.getInstance().getCircuits(Integer.parseInt(cursa.getId()), new Callback<ResponseGetCircuits>() {
             @Override
             public void onResponse(Call<ResponseGetCircuits> call, Response<ResponseGetCircuits> response) {
                 lCircuits = response.body().getCircuits();
+
+                mCircuitsAdapter = new CircuitsAdapter(infoCursaFragment.this.getContext(), lCircuits);
+                mBinding.rcvCircuits.setLayoutManager(new LinearLayoutManager(infoCursaFragment.this.getContext()));
+                mBinding.rcvCircuits.setAdapter(mCircuitsAdapter);
             }
 
             @Override
             public void onFailure(Call<ResponseGetCircuits> call, Throwable t) {
-
+                Log.e("XXX", t.toString());
             }
         });
     }
