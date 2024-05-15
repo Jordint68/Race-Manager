@@ -9,4 +9,5 @@
     <color name="white">#FFFFFFFF</color>
     <color name="blue_link">#0000FF</color>
     <color name="dark_red">#b30000</color>
+    <color name="light_red">#d98080</color>
 </resources>

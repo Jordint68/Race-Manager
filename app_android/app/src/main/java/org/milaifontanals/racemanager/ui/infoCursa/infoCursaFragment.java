@@ -1,5 +1,6 @@
 package org.milaifontanals.racemanager.ui.infoCursa;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -16,11 +17,14 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 
 import org.milaifontanals.racemanager.API.APIManager;
 import org.milaifontanals.racemanager.R;
+import org.milaifontanals.racemanager.adapters.CategoriesAdapter;
 import org.milaifontanals.racemanager.adapters.CircuitsAdapter;
 import org.milaifontanals.racemanager.databinding.FragmentInfoCursaBinding;
 import org.milaifontanals.racemanager.modelsJson.Circuit;
 import org.milaifontanals.racemanager.modelsJson.Cursa;
 import org.milaifontanals.racemanager.modelsJson.ResponseGetCircuits;
+import org.milaifontanals.racemanager.selectedListeners.ICategoriaSelectedListener;
+import org.milaifontanals.racemanager.selectedListeners.ICircuitSelectedListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,12 +33,21 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class infoCursaFragment extends Fragment {
+public class infoCursaFragment
+        extends Fragment
+        implements ICircuitSelectedListener, ICategoriaSelectedListener {
     private Cursa cursa;
     private FragmentInfoCursaBinding mBinding;
     private CircuitsAdapter mCircuitsAdapter;
+    private CategoriesAdapter mCategoriesAdapter;
+
+    private Context mContext;
 
     private List<Circuit> lCircuits = new ArrayList<>();
+
+
+    private Circuit circuitSeleccionat;
+    private String categoriaSeleccionada;
 
 
     public infoCursaFragment() {
@@ -72,6 +85,8 @@ public class infoCursaFragment extends Fragment {
         // Inflate the layout for this fragment
         mBinding = FragmentInfoCursaBinding.inflate(getLayoutInflater());
 
+        mContext = this.getContext();
+
         mostrarDades();
 
         carregar_cc();
@@ -88,8 +103,9 @@ public class infoCursaFragment extends Fragment {
             public void onResponse(Call<ResponseGetCircuits> call, Response<ResponseGetCircuits> response) {
                 lCircuits = response.body().getCircuits();
 
-                mCircuitsAdapter = new CircuitsAdapter(infoCursaFragment.this.getContext(), lCircuits);
-                mBinding.rcvCircuits.setLayoutManager(new LinearLayoutManager(infoCursaFragment.this.getContext()));
+                mBinding.rcvCircuits.setLayoutManager(new LinearLayoutManager(infoCursaFragment.this.getContext(), LinearLayoutManager.VERTICAL, false));
+                mBinding.rcvCircuits.setHasFixedSize(true);
+                mCircuitsAdapter = new CircuitsAdapter(mContext, lCircuits);
                 mBinding.rcvCircuits.setAdapter(mCircuitsAdapter);
             }
 
@@ -98,5 +114,20 @@ public class infoCursaFragment extends Fragment {
                 Log.e("XXX", t.toString());
             }
         });
+    }
+
+    @Override
+    public void onCircuitSelected(Circuit c) {
+        circuitSeleccionat = c;
+        List<String> lCats = circuitSeleccionat.getCategories();
+        mBinding.rcvCategories.setLayoutManager(new LinearLayoutManager(infoCursaFragment.this.getContext(), LinearLayoutManager.VERTICAL, false));
+        mBinding.rcvCategories.setHasFixedSize(true);
+        mCategoriesAdapter = new CategoriesAdapter(mContext, lCats);
+        mBinding.rcvCategories.setAdapter(mCategoriesAdapter);
+    }
+
+    @Override
+    public void onCategoriaSelected(String c) {
+        categoriaSeleccionada = c;
     }
 }
