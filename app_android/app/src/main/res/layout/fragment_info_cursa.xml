@@ -9,6 +9,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -19,104 +20,106 @@
                 android:layout_width="200dp"
                 android:layout_height="200dp"
                 android:src="@drawable/imatge_predeterminada_cursa"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"/>
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/txvNom"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintStart_toEndOf="@id/imvFoto"
-                app:layout_constraintTop_toTopOf="parent"
-                android:text="Nom predeterminat"
                 android:layout_margin="15dp"
+                android:text="Nom predeterminat"
                 android:textColor="@color/black"
-                android:textStyle="bold"/>
+                android:textStyle="bold"
+                app:layout_constraintStart_toEndOf="@id/imvFoto"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/txvLloc"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintStart_toEndOf="@id/imvFoto"
-                app:layout_constraintTop_toBottomOf="@id/txvNom"
-                android:text="Lloc predeterminat"
                 android:layout_margin="15dp"
-                android:textColor="@color/black"/>
+                android:text="Lloc predeterminat"
+                android:textColor="@color/black"
+                app:layout_constraintStart_toEndOf="@id/imvFoto"
+                app:layout_constraintTop_toBottomOf="@id/txvNom" />
 
             <LinearLayout
                 android:id="@+id/llDataInici"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/imvFoto"
                 android:layout_margin="15dp"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/imvFoto">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Data d'inici: "
-                    android:textColor="@color/black"/>
+                    android:textColor="@color/black" />
 
                 <TextView
                     android:id="@+id/txvDataInici"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="19-01-2003"
-                    android:textColor="@color/black"/>
+                    android:textColor="@color/black" />
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/llDataFi"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/llDataInici"
                 android:layout_margin="15dp"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/llDataInici">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Data de fi: "
-                    android:textColor="@color/black"/>
+                    android:textColor="@color/black" />
 
                 <TextView
                     android:id="@+id/txvDataFi"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="19-01-2003"
-                    android:textColor="@color/black"/>
+                    android:textColor="@color/black" />
             </LinearLayout>
 
             <TextView
                 android:id="@+id/txvDescripcio"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/txvLink"
-                app:layout_constraintStart_toStartOf="parent"
                 android:layout_margin="15dp"
                 android:text="Descripció predeterminada"
-                android:textColor="@color/black"/>
+                android:textColor="@color/black"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/txvLink" />
 
             <TextView
                 android:id="@+id/txvInscripcio"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
                 android:text="NºInscrits / Límit"
                 android:textColor="@color/black"
-                android:layout_marginLeft="15dp"
-                app:layout_constraintStart_toEndOf="@id/imvFoto"
-                app:layout_constraintBottom_toBottomOf="@id/imvFoto"/>
+                app:layout_constraintBottom_toBottomOf="@id/imvFoto"
+                app:layout_constraintStart_toEndOf="@id/imvFoto" />
 
             <TextView
                 android:id="@+id/txvLink"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_margin="15dp"
                 android:text="https://infomila.info"
                 android:textColor="@color/blue_link"
+                android:textStyle="italic"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/llDataFi"
-                android:layout_margin="15dp"
-                android:textStyle="italic"/>
+                app:layout_constraintTop_toBottomOf="@id/llDataFi" />
 
 
             <!-- Dades dels circuits -->
@@ -124,22 +127,22 @@
                 android:id="@+id/txvTitolCircuits"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginHorizontal="15dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="5dp"
                 android:text="Circuits disponibles"
                 android:textColor="@color/black"
-                android:layout_marginHorizontal="15dp"
-                android:layout_marginBottom="5dp"
-                android:layout_marginTop="20dp"
-                app:layout_constraintTop_toBottomOf="@id/txvDescripcio"
+                android:textSize="16dp"
                 android:textStyle="bold"
-                android:textSize="16dp"/>
+                app:layout_constraintTop_toBottomOf="@id/txvDescripcio" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rcvCircuits"
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
-                app:layout_constraintTop_toBottomOf="@id/txvTitolCircuits"
+                android:layout_height="wrap_content"
                 android:layout_marginHorizontal="15dp"
-                android:layout_marginVertical="5dp"/>
+                android:layout_marginVertical="5dp"
+                app:layout_constraintTop_toBottomOf="@id/txvTitolCircuits" />
 
 
             <!-- Dades de les categories -->
@@ -147,23 +150,36 @@
                 android:id="@+id/txvTitolCategories"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginHorizontal="15dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="5dp"
                 android:text="Categories disponibles"
                 android:textColor="@color/black"
-                android:layout_marginHorizontal="15dp"
-                android:layout_marginBottom="5dp"
-                android:layout_marginTop="20dp"
-                app:layout_constraintTop_toBottomOf="@id/rcvCircuits"
+                android:textSize="16dp"
                 android:textStyle="bold"
-                android:textSize="16dp"/>
+                app:layout_constraintTop_toBottomOf="@id/rcvCircuits" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rcvCategories"
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
-                app:layout_constraintTop_toBottomOf="@id/txvTitolCategories"
+                android:layout_height="wrap_content"
                 android:layout_marginHorizontal="15dp"
-                android:layout_marginVertical="5dp"/>
+                android:layout_marginVertical="5dp"
+                app:layout_constraintTop_toBottomOf="@id/txvTitolCategories" />
 
+
+            <Button
+                android:id="@+id/btnParticipar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:paddingHorizontal="25dp"
+                android:paddingVertical="10dp"
+                android:text="PARTICIPAR"
+                android:visibility="invisible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/rcvCategories" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

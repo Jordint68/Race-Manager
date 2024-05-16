@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import org.milaifontanals.racemanager.R;
@@ -29,11 +30,14 @@ public class CircuitsAdapter extends RecyclerView.Adapter<CircuitsAdapter.GridVi
     private Context mContext;
     private ICircuitSelectedListener mCircuitListener;
 
+    private infoCursaFragment frParent;
+
     private int idxCircuitSeleccionat = -1;
 
-    public CircuitsAdapter(Context c, List<Circuit> lc) {
+    public CircuitsAdapter(Context c, List<Circuit> lc, infoCursaFragment fr) {
         this.mContext = c;
         lCircuits = lc;
+        this.frParent = fr;
 
 //        if ((c instanceof ICircuitSelectedListener) == false) {
 //            throw new RuntimeException("El context no és un ICircuitSelectedListener");
@@ -75,13 +79,15 @@ public class CircuitsAdapter extends RecyclerView.Adapter<CircuitsAdapter.GridVi
         holder.txvPreu.setText(circuitActual.getPreu().toString());
 
         holder.itemView.setOnClickListener(view -> {
-            int posicioAnterior = this.idxCircuitSeleccionat;
-            this.idxCircuitSeleccionat = holder.getAdapterPosition();
-            this.notifyItemChanged(idxCircuitSeleccionat);
-            this.notifyItemChanged(posicioAnterior);
+            if (holder.getAdapterPosition() != this.idxCircuitSeleccionat) {
+                int posicioAnterior = this.idxCircuitSeleccionat;
+                this.idxCircuitSeleccionat = holder.getAdapterPosition();
+                this.notifyItemChanged(idxCircuitSeleccionat);
+                this.notifyItemChanged(posicioAnterior);
 
-            infoCursaFragment icf = new infoCursaFragment();
-            icf.onCircuitSelected(lCircuits.get(this.idxCircuitSeleccionat));
+                frParent.onCircuitSelected(lCircuits.get(this.idxCircuitSeleccionat));
+            }
+
         });
 
         if (position == idxCircuitSeleccionat) {

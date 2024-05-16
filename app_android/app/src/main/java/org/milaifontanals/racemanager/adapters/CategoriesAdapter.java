@@ -17,14 +17,17 @@ import org.milaifontanals.racemanager.ui.infoCursa.infoCursaFragment;
 import java.util.List;
 
 public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.GridViewHolder>{
-    List<String> lCategories;
-    Context mContext;
+    private List<String> lCategories;
+    private Context mContext;
 
-    int idxCategoriaSeleccionada = -1;
+    private int idxCategoriaSeleccionada = -1;
 
-    public CategoriesAdapter(Context c, List<String> lCategories) {
+    private infoCursaFragment frParent;
+
+    public CategoriesAdapter(Context c, List<String> lCategories, infoCursaFragment fr) {
         this.lCategories = lCategories;
         mContext = c;
+        this.frParent = fr;
     }
 
     @NonNull
@@ -41,13 +44,15 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Gr
         holder.txvNom.setText(ca);
 
         holder.itemView.setOnClickListener(view -> {
-            int posicioAnterior = this.idxCategoriaSeleccionada;
-            this.idxCategoriaSeleccionada = holder.getAdapterPosition();
-            this.notifyItemChanged(idxCategoriaSeleccionada);
-            this.notifyItemChanged(posicioAnterior);
+            if (holder.getAdapterPosition() != this.idxCategoriaSeleccionada) {
+                int posicioAnterior = this.idxCategoriaSeleccionada;
+                this.idxCategoriaSeleccionada = holder.getAdapterPosition();
+                this.notifyItemChanged(idxCategoriaSeleccionada);
+                this.notifyItemChanged(posicioAnterior);
 
-            infoCursaFragment icf = new infoCursaFragment();
-            icf.onCategoriaSelected(lCategories.get(this.idxCategoriaSeleccionada));
+                frParent.onCategoriaSelected(lCategories.get(this.idxCategoriaSeleccionada));
+            }
+
         });
 
         if (position == idxCategoriaSeleccionada) {

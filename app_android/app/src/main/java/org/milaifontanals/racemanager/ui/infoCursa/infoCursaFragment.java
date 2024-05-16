@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -45,9 +46,11 @@ public class infoCursaFragment
 
     private List<Circuit> lCircuits = new ArrayList<>();
 
+    private infoCursaFragment thisFragment = this;
 
-    private Circuit circuitSeleccionat;
-    private String categoriaSeleccionada;
+
+    private Circuit circuitSeleccionat = null;
+    private String categoriaSeleccionada =  null;
 
 
     public infoCursaFragment() {
@@ -77,6 +80,8 @@ public class infoCursaFragment
         mBinding.txvDataInici.setText(cursa.getDataInici());
         mBinding.txvDataFi.setText(cursa.getDataFi());
         mBinding.txvLink.setText(cursa.getWeb());
+
+//        mBinding.btnParticipar.setVisibility(View.INVISIBLE);
     }
 
     @Override
@@ -105,8 +110,10 @@ public class infoCursaFragment
 
                 mBinding.rcvCircuits.setLayoutManager(new LinearLayoutManager(infoCursaFragment.this.getContext(), LinearLayoutManager.VERTICAL, false));
                 mBinding.rcvCircuits.setHasFixedSize(true);
-                mCircuitsAdapter = new CircuitsAdapter(mContext, lCircuits);
+                mCircuitsAdapter = new CircuitsAdapter(mContext, lCircuits, thisFragment);
                 mBinding.rcvCircuits.setAdapter(mCircuitsAdapter);
+
+                omplirCategories(lCircuits.get(0).getCategories());
             }
 
             @Override
@@ -119,15 +126,33 @@ public class infoCursaFragment
     @Override
     public void onCircuitSelected(Circuit c) {
         circuitSeleccionat = c;
+
         List<String> lCats = circuitSeleccionat.getCategories();
-        mBinding.rcvCategories.setLayoutManager(new LinearLayoutManager(infoCursaFragment.this.getContext(), LinearLayoutManager.VERTICAL, false));
-        mBinding.rcvCategories.setHasFixedSize(true);
-        mCategoriesAdapter = new CategoriesAdapter(mContext, lCats);
-        mBinding.rcvCategories.setAdapter(mCategoriesAdapter);
+//        omplirCategories(lCats);
+
+        mostrarBoto();
+    }
+
+    private void mostrarBoto() {
+        if ((circuitSeleccionat != null) && (categoriaSeleccionada != null)) {
+            Log.d("XXX", "Setting btnParticipar to VISIBLE");
+            mBinding.btnParticipar.setVisibility(View.VISIBLE);
+            Log.d("XXX", String.valueOf(mBinding.btnParticipar.getVisibility()));
+        }
     }
 
     @Override
     public void onCategoriaSelected(String c) {
         categoriaSeleccionada = c;
+
+        mostrarBoto();
+    }
+
+
+    private void omplirCategories(List<String> lCats) {
+        mBinding.rcvCategories.setLayoutManager(new LinearLayoutManager(infoCursaFragment.this.getContext(), LinearLayoutManager.VERTICAL, false));
+        mBinding.rcvCategories.setHasFixedSize(true);
+        mCategoriesAdapter = new CategoriesAdapter(mContext, lCats, thisFragment);
+        mBinding.rcvCategories.setAdapter(mCategoriesAdapter);
     }
 }
