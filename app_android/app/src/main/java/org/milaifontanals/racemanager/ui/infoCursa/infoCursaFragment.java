@@ -4,6 +4,8 @@ import android.content.Context;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.util.Log;
@@ -26,6 +28,7 @@ import org.milaifontanals.racemanager.modelsJson.Cursa;
 import org.milaifontanals.racemanager.modelsJson.ResponseGetCircuits;
 import org.milaifontanals.racemanager.selectedListeners.ICategoriaSelectedListener;
 import org.milaifontanals.racemanager.selectedListeners.ICircuitSelectedListener;
+import org.milaifontanals.racemanager.ui.inscripcio.inscripcioFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,6 +40,8 @@ import retrofit2.Response;
 public class infoCursaFragment
         extends Fragment
         implements ICircuitSelectedListener, ICategoriaSelectedListener {
+
+    private static final String CLAUCURSA = "Cursa";
     private Cursa cursa;
     private FragmentInfoCursaBinding mBinding;
     private CircuitsAdapter mCircuitsAdapter;
@@ -68,11 +73,12 @@ public class infoCursaFragment
         super.onCreate(savedInstanceState);
         Bundle bundle = this.getArguments();
         if (bundle != null) {
-            cursa = (Cursa) bundle.getSerializable("Cursa");
+            cursa = (Cursa) bundle.getSerializable(CLAUCURSA);
         }
     }
 
     private void mostrarDades() {
+
         String imgUrl = cursa.getFoto().toString();
         ImageLoader.getInstance().displayImage(imgUrl, mBinding.imvFoto);
         mBinding.txvNom.setText(cursa.getNom());
@@ -81,7 +87,17 @@ public class infoCursaFragment
         mBinding.txvDataFi.setText(cursa.getDataFi());
         mBinding.txvLink.setText(cursa.getWeb());
 
-//        mBinding.btnParticipar.setVisibility(View.INVISIBLE);
+        mBinding.btnParticipar.setOnClickListener(view -> {
+            NavController nav = NavHostFragment.findNavController(thisFragment);
+            Bundle bundle = new Bundle();
+
+            // Ha de ser la id
+            bundle.putString(inscripcioFragment.CLAUCATEGORIA, categoriaSeleccionada);
+            bundle.putString(inscripcioFragment.CLAUCIRCUIT, circuitSeleccionat.getId().toString());
+            bundle.putString(inscripcioFragment.CLAUCURSA, cursa.getId().toString());
+
+            nav.navigate(R.id.action_infoCursaFragment_to_inscripcioFragment, bundle);
+        });
     }
 
     @Override

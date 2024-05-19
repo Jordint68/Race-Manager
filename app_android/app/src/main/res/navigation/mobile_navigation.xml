@@ -28,6 +28,18 @@
         <action
             android:id="@+id/action_infoCursaFragment_to_navigation_home"
             app:destination="@id/navigation_home" />
+        <action
+            android:id="@+id/action_infoCursaFragment_to_inscripcioFragment"
+            app:destination="@id/inscripcioFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/inscripcioFragment"
+        android:name="org.milaifontanals.racemanager.ui.inscripcio.inscripcioFragment"
+        android:label="fragment_inscripcio"
+        tools:layout="@layout/fragment_inscripcio" >
+        <action
+            android:id="@+id/action_inscripcioFragment_to_navigation_home"
+            app:destination="@id/navigation_home" />
     </fragment>
 
 </navigation>

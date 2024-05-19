@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.inscripcio.inscripcioFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/txvNIF"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:text="NIF: "
+            android:textColor="@color/black"
+            android:layout_marginHorizontal="25dp"
+            android:layout_marginVertical="50dp"/>
+
+        <EditText
+            android:id="@+id/edtNIF"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@id/txvNIF"
+            app:layout_constraintStart_toEndOf="@id/txvNIF"/>
+
+        <TextView
+            android:id="@+id/txvNom"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="@id/txvNIF"
+            app:layout_constraintStart_toStartOf="parent"
+            android:text="Nom: "
+            android:textColor="@color/black"
+            android:layout_marginHorizontal="25dp"
+            android:layout_marginVertical="50dp"/>
+
+        <EditText
+            android:id="@+id/edtNom"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@id/txvNom"
+            app:layout_constraintStart_toEndOf="@id/txvNom"/>
+
+        <TextView
+            android:id="@+id/txvCognoms"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="@id/txvNom"
+            app:layout_constraintStart_toStartOf="parent"
+            android:text="Cognoms: "
+            android:textColor="@color/black"
+            android:layout_marginHorizontal="25dp"
+            android:layout_marginVertical="50dp"/>
+
+        <EditText
+            android:id="@+id/edtCognoms"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@id/txvCognoms"
+            app:layout_constraintStart_toEndOf="@id/txvCognoms"/>
+
+        <TextView
+            android:id="@+id/txvDataNaix"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="@id/txvCognoms"
+            app:layout_constraintStart_toStartOf="parent"
+            android:text="Data de naixement: "
+            android:textColor="@color/black"
+            android:layout_marginHorizontal="25dp"
+            android:layout_marginVertical="50dp"/>
+
+        <ImageButton
+            android:id="@+id/btnDataNaix"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            app:layout_constraintTop_toTopOf="@id/txvDataNaix"
+            app:layout_constraintStart_toEndOf="@id/txvDataNaix"
+            android:src="@drawable/icon_datepicker"
+            android:background="@android:color/transparent"
+            android:layout_marginHorizontal="20dp"/>
+
+        <TextView
+            android:id="@+id/txvTelefon"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="@id/txvDataNaix"
+            app:layout_constraintStart_toStartOf="parent"
+            android:text="Telefon: "
+            android:textColor="@color/black"
+            android:layout_marginHorizontal="25dp"
+            android:layout_marginVertical="50dp"/>
+
+        <EditText
+            android:id="@+id/edtTelefon"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@id/txvTelefon"
+            app:layout_constraintStart_toEndOf="@id/txvTelefon"/>
+
+        <TextView
+            android:id="@+id/txvEMail"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="@id/txvTelefon"
+            app:layout_constraintStart_toStartOf="parent"
+            android:text="Correu electrònic: "
+            android:textColor="@color/black"
+            android:layout_marginHorizontal="25dp"
+            android:layout_marginVertical="50dp"/>
+
+        <EditText
+            android:id="@+id/edtEMail"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@id/txvEMail"
+            app:layout_constraintStart_toEndOf="@id/txvEMail"/>
+
+        <TextView
+            android:id="@+id/txvEsFederat"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="@id/txvEMail"
+            app:layout_constraintStart_toStartOf="parent"
+            android:text="Ets federat? "
+            android:textColor="@color/black"
+            android:layout_marginHorizontal="25dp"
+            android:layout_marginVertical="50dp"/>
+        
+        <CheckBox
+            android:id="@+id/chkEsFederat"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            app:layout_constraintTop_toTopOf="@id/txvEsFederat"
+            app:layout_constraintStart_toEndOf="@id/txvEsFederat"/>
+
+
+        <Button
+            android:id="@+id/btnEnviar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="INSCRIURE'm"
+            app:layout_constraintTop_toBottomOf="@id/txvEsFederat"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_margin="60dp"
+            android:paddingHorizontal="25dp"
+            android:paddingVertical="5dp"/>
+
+
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</FrameLayout>

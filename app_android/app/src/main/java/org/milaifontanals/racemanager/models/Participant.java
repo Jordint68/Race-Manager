@@ -2,7 +2,7 @@ package org.milaifontanals.racemanager.models;
 
 import java.util.Date;
 
-public class participant {
+public class Participant {
     private String nif;
     private String nom;
     private String cognoms;
@@ -11,7 +11,7 @@ public class participant {
     private String email;
     private Boolean es_federat;
 
-    public participant(String nif, String nom, String cognoms, Date data_naix, String telefon, String email, Boolean es_federat) {
+    public Participant(String nif, String nom, String cognoms, Date data_naix, String telefon, String email, Boolean es_federat) {
         this.nif = nif;
         this.nom = nom;
         this.cognoms = cognoms;
@@ -19,6 +19,10 @@ public class participant {
         this.telefon = telefon;
         this.email = email;
         this.es_federat = es_federat;
+    }
+
+    public Participant() {
+
     }
 
     public String getNif() {
