@@ -14,146 +14,217 @@
             android:id="@+id/txvNIF"
             android:layout_width="120dp"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginHorizontal="25dp"
+            android:layout_marginVertical="50dp"
             android:text="NIF: "
             android:textColor="@color/black"
-            android:layout_marginHorizontal="25dp"
-            android:layout_marginVertical="50dp"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
             android:id="@+id/edtNIF"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="@id/txvNIF"
-            app:layout_constraintStart_toEndOf="@id/txvNIF"/>
+            app:layout_constraintStart_toEndOf="@id/txvNIF" />
 
         <TextView
             android:id="@+id/txvNom"
             android:layout_width="120dp"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="@id/txvNIF"
-            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginHorizontal="25dp"
+            android:layout_marginVertical="50dp"
             android:text="Nom: "
             android:textColor="@color/black"
-            android:layout_marginHorizontal="25dp"
-            android:layout_marginVertical="50dp"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/txvNIF" />
 
         <EditText
             android:id="@+id/edtNom"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="@id/txvNom"
-            app:layout_constraintStart_toEndOf="@id/txvNom"/>
+            app:layout_constraintStart_toEndOf="@id/txvNom" />
 
         <TextView
             android:id="@+id/txvCognoms"
             android:layout_width="120dp"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="@id/txvNom"
-            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginHorizontal="25dp"
+            android:layout_marginVertical="50dp"
             android:text="Cognoms: "
             android:textColor="@color/black"
-            android:layout_marginHorizontal="25dp"
-            android:layout_marginVertical="50dp"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/txvNom" />
 
         <EditText
             android:id="@+id/edtCognoms"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="@id/txvCognoms"
-            app:layout_constraintStart_toEndOf="@id/txvCognoms"/>
+            app:layout_constraintStart_toEndOf="@id/txvCognoms" />
 
         <TextView
             android:id="@+id/txvDataNaix"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="@id/txvCognoms"
-            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginHorizontal="25dp"
+            android:layout_marginVertical="50dp"
             android:text="Data de naixement: "
             android:textColor="@color/black"
-            android:layout_marginHorizontal="25dp"
-            android:layout_marginVertical="50dp"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/txvCognoms" />
 
         <ImageButton
             android:id="@+id/btnDataNaix"
             android:layout_width="wrap_content"
             android:layout_height="20dp"
-            app:layout_constraintTop_toTopOf="@id/txvDataNaix"
-            app:layout_constraintStart_toEndOf="@id/txvDataNaix"
-            android:src="@drawable/icon_datepicker"
+            android:layout_marginHorizontal="20dp"
             android:background="@android:color/transparent"
-            android:layout_marginHorizontal="20dp"/>
+            android:src="@drawable/icon_datepicker"
+            app:layout_constraintStart_toEndOf="@id/txvDataNaix"
+            app:layout_constraintTop_toTopOf="@id/txvDataNaix" />
+
+        <TextView
+            android:id="@+id/txvResDataNaix"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@id/btnDataNaix"
+            app:layout_constraintBottom_toBottomOf="@id/btnDataNaix"
+            android:layout_marginHorizontal="10dp"
+            android:text="01/01/2001"
+            android:textColor="@color/black"/>
 
         <TextView
             android:id="@+id/txvTelefon"
             android:layout_width="120dp"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="@id/txvDataNaix"
-            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginHorizontal="25dp"
+            android:layout_marginVertical="50dp"
             android:text="Telefon: "
             android:textColor="@color/black"
-            android:layout_marginHorizontal="25dp"
-            android:layout_marginVertical="50dp"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/txvDataNaix" />
 
         <EditText
             android:id="@+id/edtTelefon"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
+            android:inputType="number"
             app:layout_constraintBottom_toBottomOf="@id/txvTelefon"
-            app:layout_constraintStart_toEndOf="@id/txvTelefon"/>
+            app:layout_constraintStart_toEndOf="@id/txvTelefon" />
 
         <TextView
             android:id="@+id/txvEMail"
             android:layout_width="120dp"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="@id/txvTelefon"
-            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginHorizontal="25dp"
+            android:layout_marginVertical="50dp"
             android:text="Correu electrònic: "
             android:textColor="@color/black"
-            android:layout_marginHorizontal="25dp"
-            android:layout_marginVertical="50dp"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/txvTelefon" />
 
         <EditText
             android:id="@+id/edtEMail"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="@id/txvEMail"
-            app:layout_constraintStart_toEndOf="@id/txvEMail"/>
+            app:layout_constraintStart_toEndOf="@id/txvEMail" />
 
         <TextView
             android:id="@+id/txvEsFederat"
             android:layout_width="120dp"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="@id/txvEMail"
-            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginHorizontal="25dp"
+            android:layout_marginVertical="50dp"
             android:text="Ets federat? "
             android:textColor="@color/black"
-            android:layout_marginHorizontal="25dp"
-            android:layout_marginVertical="50dp"/>
-        
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/txvEMail"/>
+
         <CheckBox
             android:id="@+id/chkEsFederat"
             android:layout_width="wrap_content"
             android:layout_height="20dp"
-            app:layout_constraintTop_toTopOf="@id/txvEsFederat"
-            app:layout_constraintStart_toEndOf="@id/txvEsFederat"/>
+            app:layout_constraintStart_toEndOf="@id/txvEsFederat"
+            app:layout_constraintTop_toTopOf="@id/txvEsFederat" />
 
 
         <Button
             android:id="@+id/btnEnviar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="INSCRIURE'm"
-            app:layout_constraintTop_toBottomOf="@id/txvEsFederat"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
             android:layout_margin="60dp"
             android:paddingHorizontal="25dp"
-            android:paddingVertical="5dp"/>
+            android:paddingVertical="5dp"
+            android:text="INSCRIURE'm"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/txvEsFederat" />
 
 
+        <!-- WARNINGS -->
+        <ImageView
+            android:id="@+id/warnNIF"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:src="@drawable/icon_warning"
+            app:layout_constraintBottom_toBottomOf="@id/edtNIF"
+            app:layout_constraintStart_toEndOf="@id/edtNIF"
+            android:visibility="invisible"/>
 
+        <ImageView
+            android:id="@+id/warnNom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:src="@drawable/icon_warning"
+            app:layout_constraintBottom_toBottomOf="@id/edtNom"
+            app:layout_constraintStart_toEndOf="@id/edtNom"
+            android:visibility="invisible"/>
+
+        <ImageView
+            android:id="@+id/warnCognoms"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:src="@drawable/icon_warning"
+            app:layout_constraintBottom_toBottomOf="@id/edtCognoms"
+            app:layout_constraintStart_toEndOf="@id/edtCognoms"
+            android:visibility="invisible"/>
+
+        <ImageView
+            android:id="@+id/warnDataNaix"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="5dp"
+            android:src="@drawable/icon_warning"
+            app:layout_constraintBottom_toBottomOf="@id/btnDataNaix"
+            app:layout_constraintStart_toStartOf="@id/warnCognoms"
+            android:visibility="invisible"/>
+
+        <ImageView
+            android:id="@+id/warnTelefon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:src="@drawable/icon_warning"
+            app:layout_constraintBottom_toBottomOf="@id/edtTelefon"
+            app:layout_constraintStart_toEndOf="@id/edtTelefon"
+            android:visibility="invisible"/>
+
+
+        <ImageView
+            android:id="@+id/warnEMail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:src="@drawable/icon_warning"
+            app:layout_constraintBottom_toBottomOf="@id/edtEMail"
+            app:layout_constraintStart_toEndOf="@id/edtEMail"
+            android:visibility="invisible"/>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

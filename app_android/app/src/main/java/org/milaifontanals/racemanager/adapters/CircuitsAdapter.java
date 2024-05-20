@@ -17,6 +17,7 @@ import org.milaifontanals.racemanager.R;
 import org.milaifontanals.racemanager.modelsJson.Circuit;
 import org.milaifontanals.racemanager.selectedListeners.ICircuitSelectedListener;
 import org.milaifontanals.racemanager.ui.infoCursa.infoCursaFragment;
+import org.milaifontanals.racemanager.utils.Utils;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -26,6 +27,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CircuitsAdapter extends RecyclerView.Adapter<CircuitsAdapter.GridViewHolder> {
+    private Utils utils = new Utils();
+
     private List<Circuit> lCircuits = new ArrayList<>();
     private Context mContext;
     private ICircuitSelectedListener mCircuitListener;
@@ -33,6 +36,7 @@ public class CircuitsAdapter extends RecyclerView.Adapter<CircuitsAdapter.GridVi
     private infoCursaFragment frParent;
 
     private int idxCircuitSeleccionat = -1;
+
 
     public CircuitsAdapter(Context c, List<Circuit> lc, infoCursaFragment fr) {
         this.mContext = c;
@@ -57,20 +61,7 @@ public class CircuitsAdapter extends RecyclerView.Adapter<CircuitsAdapter.GridVi
         Circuit circuitActual = lCircuits.get(position);
 
         String s_data_incorrecte  = circuitActual.getTemps();
-        String s_data = s_data_incorrecte;
-
-        DateTimeFormatter dtf;
-
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            dtf = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
-
-            try {
-                LocalDateTime dataAmbHora = LocalDateTime.parse(s_data_incorrecte, dtf);
-                DateTimeFormatter dtfHora = DateTimeFormatter.ofPattern("HH:mm:ss");
-                s_data = dataAmbHora.format(dtfHora);
-            } catch (DateTimeParseException ex) {
-            }
-        }
+        String s_data = utils.formatarData(s_data_incorrecte);
 
         holder.txvNum.setText(circuitActual.getNum().toString());
         holder.txvNom.setText(circuitActual.getNom().toString());

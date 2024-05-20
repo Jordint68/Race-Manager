@@ -78,7 +78,6 @@ public class infoCursaFragment
     }
 
     private void mostrarDades() {
-
         String imgUrl = cursa.getFoto().toString();
         ImageLoader.getInstance().displayImage(imgUrl, mBinding.imvFoto);
         mBinding.txvNom.setText(cursa.getNom());
@@ -87,7 +86,18 @@ public class infoCursaFragment
         mBinding.txvDataFi.setText(cursa.getDataFi());
         mBinding.txvLink.setText(cursa.getWeb());
 
+        mBinding.txvTitolCategories.setVisibility(View.INVISIBLE);
+        mBinding.txvTitolCircuits.setVisibility(View.INVISIBLE);
+        mBinding.rcvCategories.setVisibility(View.INVISIBLE);
+        mBinding.rcvCircuits.setVisibility(View.INVISIBLE);
+
         mBinding.btnParticipar.setOnClickListener(view -> {
+            funcBtnParticipar();
+        });
+    }
+
+    private void funcBtnParticipar() {
+        if ((circuitSeleccionat != null) && (categoriaSeleccionada != null)) {
             NavController nav = NavHostFragment.findNavController(thisFragment);
             Bundle bundle = new Bundle();
 
@@ -97,7 +107,15 @@ public class infoCursaFragment
             bundle.putString(inscripcioFragment.CLAUCURSA, cursa.getId().toString());
 
             nav.navigate(R.id.action_infoCursaFragment_to_inscripcioFragment, bundle);
-        });
+        } else {
+            mBinding.txvTitolCategories.setVisibility(View.VISIBLE);
+            mBinding.txvTitolCircuits.setVisibility(View.VISIBLE);
+            mBinding.rcvCategories.setVisibility(View.VISIBLE);
+            mBinding.rcvCircuits.setVisibility(View.VISIBLE);
+
+            mBinding.btnParticipar.setEnabled(false);
+        }
+
     }
 
     @Override
@@ -144,16 +162,13 @@ public class infoCursaFragment
         circuitSeleccionat = c;
 
         List<String> lCats = circuitSeleccionat.getCategories();
-//        omplirCategories(lCats);
 
         mostrarBoto();
     }
 
     private void mostrarBoto() {
         if ((circuitSeleccionat != null) && (categoriaSeleccionada != null)) {
-            Log.d("XXX", "Setting btnParticipar to VISIBLE");
-            mBinding.btnParticipar.setVisibility(View.VISIBLE);
-            Log.d("XXX", String.valueOf(mBinding.btnParticipar.getVisibility()));
+            mBinding.btnParticipar.setEnabled(true);
         }
     }
 
