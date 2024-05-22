@@ -1,5 +1,6 @@
 package org.milaifontanals.racemanager.utils;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -41,6 +42,32 @@ public class Utils {
             // Para versiones de Android anteriores a Oreo
             SimpleDateFormat sdfOutput = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
             return sdfOutput.format(date);
+        }
+    }
+
+    public Date convertirStringADate(String s_data) {
+        String pattern = "dd/MM/yyyy";
+
+        // Para versiones de Android Oreo y superiores
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            DateTimeFormatter dtf = DateTimeFormatter.ofPattern(pattern);
+
+            try {
+                LocalDateTime localDateTime = LocalDateTime.parse(s_data, dtf);
+                return Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant());
+            } catch (DateTimeParseException e) {
+                e.printStackTrace();
+                return null;
+            }
+        } else {
+            // Para versiones de Android anteriores a Oreo
+            SimpleDateFormat sdf = new SimpleDateFormat(pattern, Locale.getDefault());
+            try {
+                return sdf.parse(s_data);
+            } catch (ParseException e) {
+                e.printStackTrace();
+                return null;
+            }
         }
     }
 }

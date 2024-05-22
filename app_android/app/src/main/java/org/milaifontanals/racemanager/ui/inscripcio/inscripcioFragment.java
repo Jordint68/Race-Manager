@@ -1,12 +1,15 @@
 package org.milaifontanals.racemanager.ui.inscripcio;
 
 import android.app.DatePickerDialog;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 
+import android.util.Log;
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,9 +31,19 @@ public class inscripcioFragment extends Fragment {
     public static final String CLAUCIRCUIT = "param_circuit";
     public static final String CLAUCATEGORIA = "param_categoria";
 
+    private static final String PREF_NIF = "NIF";
+    private static final String PREF_NOM = "NOM";
+    private static final String PREF_COGNOMS = "COGNOMS";
+    private static final String PREF_DATA = "DATA";
+    private static final String PREF_TELF = "TELF";
+    private static final String PREF_EMAIL = "EMAIL";
+    private static final String PREF_FEDERAT = "FEDERAT";
+
+    private SharedPreferences sh;
+    private SharedPreferences.Editor shEditor;
+
 
     private FragmentInscripcioBinding mBinding;
-
 
     private String cursa_id;
     private String circuit_id;
@@ -65,78 +78,118 @@ public class inscripcioFragment extends Fragment {
         // Inflate the layout for this fragment
         mBinding = FragmentInscripcioBinding.inflate(getLayoutInflater());
 
+        recollirDadesDeCache();
 
         mBinding.btnDataNaix.setOnClickListener(view -> {
             openDatePicker();
         });
 
         mBinding.btnEnviar.setOnClickListener(view -> {
-            boolean error = false;
-
-            // Obtenir les dades del participant
-            String NIF = mBinding.edtNIF.getText().toString();
-            if(!validaNIF(NIF)) {
-                error = true;
-                mBinding.warnNIF.setVisibility(View.VISIBLE);
-            } else mBinding.warnNIF.setVisibility(View.INVISIBLE);
-
-            String telf = mBinding.edtTelefon.getText().toString();
-            if (telf == null || telf.length() != 9) {
-                error = true;
-                mBinding.warnTelefon.setVisibility(View.VISIBLE);
-            } else mBinding.warnTelefon.setVisibility(View.INVISIBLE);
-
-            String nom = mBinding.edtNom.getText().toString();
-            if (nom == null || nom.length() > 50 || nom.equals("")) {
-                error = true;
-                mBinding.warnNom.setVisibility(View.VISIBLE);
-            } else mBinding.warnNom.setVisibility(View.INVISIBLE);
-
-            String cognoms = mBinding.edtCognoms.getText().toString();
-            if (cognoms == null || cognoms.length() > 50 ||cognoms.equals("")) {
-                error = true;
-                mBinding.warnCognoms.setVisibility(View.VISIBLE);
-            } else mBinding.warnCognoms.setVisibility(View.INVISIBLE);
-
-            Date dataNaix = participant.getData_naix();
-            if (validaData(dataNaix)) {
-                error = true;
-                mBinding.warnDataNaix.setVisibility(View.VISIBLE);
-            } else mBinding.warnDataNaix.setVisibility(View.INVISIBLE);
-
-            String email = mBinding.edtEMail.getText().toString();
-            if(!validaEmail(email)) {
-                error = true;
-                mBinding.warnEMail.setVisibility(View.VISIBLE);
-            } else mBinding.warnEMail.setVisibility(View.INVISIBLE);
-
-
-            // Afegir les dades del participant
-            if(!error) {
-                participant.setNif(NIF);
-                participant.setNom(nom);
-                participant.setCognoms(cognoms);
-                participant.setTelefon(telf);
-                participant.setEmail(email);
-                participant.setEs_federat(mBinding.chkEsFederat.isActivated());
-
-                // Desar les dades com a 'caché'
-
-
-
-                // Pujar el participant al webservice
-
-
-
-                // Es torna a la pàgina principal
-                NavController nav = NavHostFragment.findNavController(this);
-                nav.navigate(R.id.action_inscripcioFragment_to_navigation_home);
-            }
+            funcBtnEnviar();
 
         });
-
-
+        
         return mBinding.getRoot();
+    }
+
+    private void recollirDadesDeCache() {
+        sh = getActivity().getPreferences(Context.MODE_PRIVATE);
+        String NIF = sh.getString(PREF_NIF, "");
+        String nom = sh.getString(PREF_NOM, "");
+        String cognoms = sh.getString(PREF_COGNOMS, "");
+        String s_data = sh.getString(PREF_DATA, "");
+        String telf = sh.getString(PREF_TELF, "");
+        String email = sh.getString(PREF_EMAIL, "");
+        boolean federat = sh.getBoolean(PREF_FEDERAT, false);
+
+        mBinding.edtNIF.setText(NIF);
+        mBinding.edtNom.setText(nom);
+        mBinding.edtCognoms.setText(cognoms);
+        mBinding.edtTelefon.setText(telf);
+        mBinding.edtEMail.setText(email);
+        mBinding.chkEsFederat.setChecked(federat);
+
+        Date data = utils.convertirStringADate(s_data);
+        if (data != null) {
+            mBinding.txvResDataNaix.setText(s_data);
+            participant.setData_naix(data);
+        }
+
+    }
+
+    private void funcBtnEnviar() {
+        boolean error = false;
+
+        // Obtenir les dades del participant
+        String NIF = mBinding.edtNIF.getText().toString();
+        if(!validaNIF(NIF)) {
+            error = true;
+            mBinding.warnNIF.setVisibility(View.VISIBLE);
+        } else mBinding.warnNIF.setVisibility(View.INVISIBLE);
+
+        String telf = mBinding.edtTelefon.getText().toString();
+        if (telf == null || telf.length() != 9) {
+            error = true;
+            mBinding.warnTelefon.setVisibility(View.VISIBLE);
+        } else mBinding.warnTelefon.setVisibility(View.INVISIBLE);
+
+        String nom = mBinding.edtNom.getText().toString();
+        if (nom == null || nom.length() > 50 || nom.equals("")) {
+            error = true;
+            mBinding.warnNom.setVisibility(View.VISIBLE);
+        } else mBinding.warnNom.setVisibility(View.INVISIBLE);
+
+        String cognoms = mBinding.edtCognoms.getText().toString();
+        if (cognoms == null || cognoms.length() > 50 ||cognoms.equals("")) {
+            error = true;
+            mBinding.warnCognoms.setVisibility(View.VISIBLE);
+        } else mBinding.warnCognoms.setVisibility(View.INVISIBLE);
+
+        Date dataNaix = participant.getData_naix();
+        if (validaData(dataNaix)) {
+            error = true;
+            mBinding.warnDataNaix.setVisibility(View.VISIBLE);
+        } else mBinding.warnDataNaix.setVisibility(View.INVISIBLE);
+
+        String email = mBinding.edtEMail.getText().toString();
+        if(!validaEmail(email)) {
+            error = true;
+            mBinding.warnEMail.setVisibility(View.VISIBLE);
+        } else mBinding.warnEMail.setVisibility(View.INVISIBLE);
+        boolean esFederat = mBinding.chkEsFederat.isChecked();
+
+        // Afegir les dades del participant
+        if(!error) {
+            participant.setNif(NIF);
+            participant.setNom(nom);
+            participant.setCognoms(cognoms);
+            participant.setTelefon(telf);
+            participant.setEmail(email);
+            participant.setEs_federat(esFederat);
+
+            // Desar les dades com a 'caché'
+
+            desarDadesCache();
+
+            // Pujar el participant al webservice
+
+
+            // Es torna a la pàgina principal
+            NavController nav = NavHostFragment.findNavController(this);
+            nav.navigate(R.id.action_inscripcioFragment_to_navigation_home);
+        }
+    }
+
+    private void desarDadesCache() {
+        shEditor = sh.edit();
+        shEditor.putString(PREF_NIF, participant.getNif());
+        shEditor.putString(PREF_NOM, participant.getNom());
+        shEditor.putString(PREF_COGNOMS, participant.getCognoms());
+        shEditor.putString(PREF_DATA, mBinding.txvResDataNaix.getText().toString());
+        shEditor.putString(PREF_TELF, participant.getTelefon());
+        shEditor.putString(PREF_EMAIL, participant.getEmail());
+        shEditor.putBoolean(PREF_FEDERAT, participant.getEs_federat());
+        shEditor.apply();
     }
 
     private boolean validaEmail(String email) {

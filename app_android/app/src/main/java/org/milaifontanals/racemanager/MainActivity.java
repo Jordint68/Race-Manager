@@ -13,6 +13,11 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
+
+
+
 import org.milaifontanals.racemanager.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
