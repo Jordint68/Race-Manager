@@ -6,32 +6,28 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
-import javax.annotation.processing.Generated;
-
-@Generated("jsonschema2pojo")
 public class Estat implements Serializable {
-
-    @SerializedName("id")
+    @SerializedName("est_id")
     @Expose
-    private String id;
-    @SerializedName("nom")
+    private Integer estId;
+    @SerializedName("est_nom")
     @Expose
-    private String nom;
+    private String estNom;
 
-    public String getId() {
-        return id;
+    public Integer getEstId() {
+        return estId;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setEstId(Integer estId) {
+        this.estId = estId;
     }
 
-    public String getNom() {
-        return nom;
+    public String getEstNom() {
+        return estNom;
     }
 
-    public void setNom(String nom) {
-        this.nom = nom;
+    public void setEstNom(String estNom) {
+        this.estNom = estNom;
     }
 
 }

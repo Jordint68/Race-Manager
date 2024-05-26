@@ -1,31 +1,48 @@
+
 package org.milaifontanals.racemanager.modelsJson;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Checkpoint {
+import java.io.Serializable;
 
-    @SerializedName("id")
+import javax.annotation.processing.Generated;
+
+@Generated("jsonschema2pojo")
+public class Checkpoint implements Serializable {
+
+    @SerializedName("chk_id")
     @Expose
-    private Integer id;
-
-    @SerializedName("pk")
+    private Integer chkId;
+    @SerializedName("chk_km")
     @Expose
-    private float pk;
+    private Integer chkKm;
+    @SerializedName("chk_cir_id")
+    @Expose
+    private Integer chkCirId;
 
-    public Integer getId() {
-        return id;
+    public Integer getChkId() {
+        return chkId;
     }
 
-    private void setId(Integer id) {
-        this.id = id;
+    public void setChkId(Integer chkId) {
+        this.chkId = chkId;
     }
 
-    public float getPk() {
-        return pk;
+    public Integer getChkKm() {
+        return chkKm;
     }
 
-    public void setPk(float pk) {
-        this.pk = pk;
+    public void setChkKm(Integer chkKm) {
+        this.chkKm = chkKm;
     }
+
+    public Integer getChkCirId() {
+        return chkCirId;
+    }
+
+    public void setChkCirId(Integer chkCirId) {
+        this.chkCirId = chkCirId;
+    }
+
 }

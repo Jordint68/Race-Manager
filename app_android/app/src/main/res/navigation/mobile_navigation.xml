@@ -40,6 +40,9 @@
         <action
             android:id="@+id/action_inscripcioFragment_to_navigation_home"
             app:destination="@id/navigation_home" />
+        <action
+            android:id="@+id/action_inscripcioFragment_to_infoCursaFragment"
+            app:destination="@id/infoCursaFragment" />
     </fragment>
 
 </navigation>

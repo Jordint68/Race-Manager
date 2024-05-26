@@ -3,6 +3,8 @@ package org.milaifontanals.racemanager.ui.infoCursa;
 import android.content.Context;
 import android.os.Bundle;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
@@ -12,9 +14,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -23,9 +22,10 @@ import org.milaifontanals.racemanager.R;
 import org.milaifontanals.racemanager.adapters.CategoriesAdapter;
 import org.milaifontanals.racemanager.adapters.CircuitsAdapter;
 import org.milaifontanals.racemanager.databinding.FragmentInfoCursaBinding;
+import org.milaifontanals.racemanager.modelsJson.Categoria;
+import org.milaifontanals.racemanager.modelsJson.Category;
 import org.milaifontanals.racemanager.modelsJson.Circuit;
 import org.milaifontanals.racemanager.modelsJson.Cursa;
-import org.milaifontanals.racemanager.modelsJson.ResponseGetCircuits;
 import org.milaifontanals.racemanager.selectedListeners.ICategoriaSelectedListener;
 import org.milaifontanals.racemanager.selectedListeners.ICircuitSelectedListener;
 import org.milaifontanals.racemanager.ui.inscripcio.inscripcioFragment;
@@ -50,12 +50,13 @@ public class infoCursaFragment
     private Context mContext;
 
     private List<Circuit> lCircuits = new ArrayList<>();
+    private List<Category> lCats = new ArrayList<>();
 
     private infoCursaFragment thisFragment = this;
 
 
     private Circuit circuitSeleccionat = null;
-    private String categoriaSeleccionada =  null;
+    private Category categoriaSeleccionada =  null;
 
 
     public infoCursaFragment() {
@@ -74,17 +75,19 @@ public class infoCursaFragment
         Bundle bundle = this.getArguments();
         if (bundle != null) {
             cursa = (Cursa) bundle.getSerializable(CLAUCURSA);
+
+            lCircuits = cursa.getCircuits();
         }
     }
 
     private void mostrarDades() {
-        String imgUrl = cursa.getFoto().toString();
+        String imgUrl = cursa.getCurFoto();
         ImageLoader.getInstance().displayImage(imgUrl, mBinding.imvFoto);
-        mBinding.txvNom.setText(cursa.getNom());
-        mBinding.txvLloc.setText(cursa.getLloc());
-        mBinding.txvDataInici.setText(cursa.getDataInici());
-        mBinding.txvDataFi.setText(cursa.getDataFi());
-        mBinding.txvLink.setText(cursa.getWeb());
+        mBinding.txvNom.setText(cursa.getCurNom());
+        mBinding.txvLloc.setText(cursa.getCurLloc());
+        mBinding.txvDataInici.setText(cursa.getCurDataInici());
+        mBinding.txvDataFi.setText(cursa.getCurDataFi());
+        mBinding.txvLink.setText(cursa.getCurWeb());
 
         mBinding.txvTitolCategories.setVisibility(View.INVISIBLE);
         mBinding.txvTitolCircuits.setVisibility(View.INVISIBLE);
@@ -102,17 +105,13 @@ public class infoCursaFragment
             Bundle bundle = new Bundle();
 
             // Ha de ser la id
-            bundle.putString(inscripcioFragment.CLAUCATEGORIA, categoriaSeleccionada);
-            bundle.putString(inscripcioFragment.CLAUCIRCUIT, circuitSeleccionat.getId().toString());
-            bundle.putString(inscripcioFragment.CLAUCURSA, cursa.getId().toString());
+            bundle.putString(inscripcioFragment.CLAUCATEGORIA, categoriaSeleccionada.getCategoria().getCatNom());
+            bundle.putString(inscripcioFragment.CLAUCIRCUIT, circuitSeleccionat.getCirId().toString());
+            bundle.putString(inscripcioFragment.CLAUCURSA, cursa.getCurId().toString());
 
             nav.navigate(R.id.action_infoCursaFragment_to_inscripcioFragment, bundle);
         } else {
-            mBinding.txvTitolCategories.setVisibility(View.VISIBLE);
-            mBinding.txvTitolCircuits.setVisibility(View.VISIBLE);
-            mBinding.rcvCategories.setVisibility(View.VISIBLE);
-            mBinding.rcvCircuits.setVisibility(View.VISIBLE);
-
+            mostrar_circuits();
             mBinding.btnParticipar.setEnabled(false);
         }
 
@@ -126,45 +125,43 @@ public class infoCursaFragment
 
         mContext = this.getContext();
 
-        mostrarDades();
+        Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
+        if (toolbar != null) {
+            ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+            if (((AppCompatActivity) getActivity()).getSupportActionBar() != null) {
+                ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Informació de la cursa");
+                ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        carregar_cc();
+                toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        NavController nav = NavHostFragment.findNavController(thisFragment);
+                        nav.navigate(R.id.action_infoCursaFragment_to_navigation_home);
+                    }
+                });
+            }
+        }
+        mostrarDades();
+        
+
 
         return mBinding.getRoot();
     }
 
     /*
-        Funció per a carregar les dades dels circuits i les categories
+        Funcions per mostrar les dades dels circuits i les categories
      */
-    private void carregar_cc() {
-        APIManager.getInstance().getCircuits(Integer.parseInt(cursa.getId()), new Callback<ResponseGetCircuits>() {
-            @Override
-            public void onResponse(Call<ResponseGetCircuits> call, Response<ResponseGetCircuits> response) {
-                lCircuits = response.body().getCircuits();
 
-                mBinding.rcvCircuits.setLayoutManager(new LinearLayoutManager(infoCursaFragment.this.getContext(), LinearLayoutManager.VERTICAL, false));
-                mBinding.rcvCircuits.setHasFixedSize(true);
-                mCircuitsAdapter = new CircuitsAdapter(mContext, lCircuits, thisFragment);
-                mBinding.rcvCircuits.setAdapter(mCircuitsAdapter);
+    private void mostrar_circuits() {
+        mBinding.txvTitolCircuits.setVisibility(View.VISIBLE);
+        mBinding.rcvCircuits.setVisibility(View.VISIBLE);
 
-                omplirCategories(lCircuits.get(0).getCategories());
-            }
-
-            @Override
-            public void onFailure(Call<ResponseGetCircuits> call, Throwable t) {
-                Log.e("XXX", t.toString());
-            }
-        });
+        mBinding.rcvCircuits.setLayoutManager(new LinearLayoutManager(infoCursaFragment.this.getContext(), LinearLayoutManager.VERTICAL, false));
+        mBinding.rcvCircuits.setHasFixedSize(true);
+        mCircuitsAdapter = new CircuitsAdapter(mContext, lCircuits, thisFragment);
+        mBinding.rcvCircuits.setAdapter(mCircuitsAdapter);
     }
 
-    @Override
-    public void onCircuitSelected(Circuit c) {
-        circuitSeleccionat = c;
-
-        List<String> lCats = circuitSeleccionat.getCategories();
-
-        mostrarBoto();
-    }
 
     private void mostrarBoto() {
         if ((circuitSeleccionat != null) && (categoriaSeleccionada != null)) {
@@ -173,17 +170,31 @@ public class infoCursaFragment
     }
 
     @Override
-    public void onCategoriaSelected(String c) {
+    public void onCategoriaSelected(Category c) {
         categoriaSeleccionada = c;
+
 
         mostrarBoto();
     }
 
+    private void mostrarCategories() {
+        mBinding.txvTitolCategories.setVisibility(View.VISIBLE);
+        mBinding.rcvCategories.setVisibility(View.VISIBLE);
 
-    private void omplirCategories(List<String> lCats) {
+        lCats = circuitSeleccionat.getCategories();
+
         mBinding.rcvCategories.setLayoutManager(new LinearLayoutManager(infoCursaFragment.this.getContext(), LinearLayoutManager.VERTICAL, false));
         mBinding.rcvCategories.setHasFixedSize(true);
         mCategoriesAdapter = new CategoriesAdapter(mContext, lCats, thisFragment);
         mBinding.rcvCategories.setAdapter(mCategoriesAdapter);
+    }
+
+
+    @Override
+    public void onCircuitSelected(Circuit c) {
+        circuitSeleccionat = c;
+
+        mostrarCategories();
+        mostrarBoto();
     }
 }

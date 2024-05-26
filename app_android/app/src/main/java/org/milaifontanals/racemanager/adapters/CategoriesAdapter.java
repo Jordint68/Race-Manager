@@ -12,19 +12,21 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import org.milaifontanals.racemanager.R;
+import org.milaifontanals.racemanager.modelsJson.Categoria;
+import org.milaifontanals.racemanager.modelsJson.Category;
 import org.milaifontanals.racemanager.ui.infoCursa.infoCursaFragment;
 
 import java.util.List;
 
 public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.GridViewHolder>{
-    private List<String> lCategories;
+    private List<Category> lCategories;
     private Context mContext;
 
     private int idxCategoriaSeleccionada = -1;
 
     private infoCursaFragment frParent;
 
-    public CategoriesAdapter(Context c, List<String> lCategories, infoCursaFragment fr) {
+    public CategoriesAdapter(Context c, List<Category> lCategories, infoCursaFragment fr) {
         this.lCategories = lCategories;
         mContext = c;
         this.frParent = fr;
@@ -39,7 +41,7 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Gr
 
     @Override
     public void onBindViewHolder(@NonNull CategoriesAdapter.GridViewHolder holder, int position) {
-        String ca = lCategories.get(position);
+        String ca = lCategories.get(position).getCategoria().getCatNom();
 
         holder.txvNom.setText(ca);
 

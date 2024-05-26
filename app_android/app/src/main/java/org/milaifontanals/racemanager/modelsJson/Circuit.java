@@ -1,104 +1,114 @@
+
 package org.milaifontanals.racemanager.modelsJson;
 
+import java.io.Serializable;
+import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.math.BigDecimal;
-import java.sql.Time;
-import java.util.Date;
-import java.util.List;
+public class Circuit implements Serializable {
 
-public class Circuit {
-    @SerializedName("id")
+    @SerializedName("cir_id")
     @Expose
-    private Integer id;
-
-    @SerializedName("cursaId")
+    private Integer cirId;
+    @SerializedName("cir_cur_id")
     @Expose
-    private int cursaId;
-
-    @SerializedName("num")
+    private Integer cirCurId;
+    @SerializedName("cir_num")
     @Expose
-    private Integer num;
-
-    @SerializedName("distancia")
+    private Integer cirNum;
+    @SerializedName("cir_distancia")
     @Expose
-    private float distancia;
-
-    @SerializedName("nom")
+    private Integer cirDistancia;
+    @SerializedName("cir_nom")
     @Expose
-    private String nom;
-
-    @SerializedName("preu")
+    private String cirNom;
+    @SerializedName("cir_preu")
     @Expose
-    private BigDecimal preu;
-
-    @SerializedName("temps")
+    private String cirPreu;
+    @SerializedName("cir_temps_estimat")
     @Expose
-    private String temps;
-
+    private String cirTempsEstimat;
+    @SerializedName("cir_checkpoints")
+    @Expose
+    private Integer cirCheckpoints;
+    @SerializedName("categories")
+    @Expose
+    private List<Category> categories;
     @SerializedName("checkpoints")
     @Expose
     private List<Checkpoint> checkpoints;
 
-    @SerializedName("categories")
-    @Expose
-    private List<String> categories;
-
-    public Integer getId() {
-        return id;
+    public Integer getCirId() {
+        return cirId;
     }
 
-    private void setId(Integer id) {
-        this.id = id;
+    public void setCirId(Integer cirId) {
+        this.cirId = cirId;
     }
 
-    public int getCursaId() {
-        return cursaId;
+    public Integer getCirCurId() {
+        return cirCurId;
     }
 
-    public void setCursaId(int cursaId) {
-        this.cursaId = cursaId;
+    public void setCirCurId(Integer cirCurId) {
+        this.cirCurId = cirCurId;
     }
 
-    public Integer getNum() {
-        return num;
+    public Integer getCirNum() {
+        return cirNum;
     }
 
-    public void setNum(Integer num) {
-        this.num = num;
+    public void setCirNum(Integer cirNum) {
+        this.cirNum = cirNum;
     }
 
-    public float getDistancia() {
-        return distancia;
+    public Integer getCirDistancia() {
+        return cirDistancia;
     }
 
-    public void setDistancia(float distancia) {
-        this.distancia = distancia;
+    public void setCirDistancia(Integer cirDistancia) {
+        this.cirDistancia = cirDistancia;
     }
 
-    public String getNom() {
-        return nom;
+    public String getCirNom() {
+        return cirNom;
     }
 
-    public void setNom(String nom) {
-        this.nom = nom;
+    public void setCirNom(String cirNom) {
+        this.cirNom = cirNom;
     }
 
-    public BigDecimal getPreu() {
-        return preu;
+    public String getCirPreu() {
+        return cirPreu;
     }
 
-    public void setPreu(BigDecimal preu) {
-        this.preu = preu;
+    public void setCirPreu(String cirPreu) {
+        this.cirPreu = cirPreu;
     }
 
-    public String getTemps() {
-        return temps;
+    public String getCirTempsEstimat() {
+        return cirTempsEstimat;
     }
 
-    public void setTemps(String temps) {
-        this.temps = temps;
+    public void setCirTempsEstimat(String cirTempsEstimat) {
+        this.cirTempsEstimat = cirTempsEstimat;
+    }
+
+    public Integer getCirCheckpoints() {
+        return cirCheckpoints;
+    }
+
+    public void setCirCheckpoints(Integer cirCheckpoints) {
+        this.cirCheckpoints = cirCheckpoints;
+    }
+
+    public List<Category> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(List<Category> categories) {
+        this.categories = categories;
     }
 
     public List<Checkpoint> getCheckpoints() {
@@ -109,11 +119,4 @@ public class Circuit {
         this.checkpoints = checkpoints;
     }
 
-    public List<String> getCategories() {
-        return categories;
-    }
-
-    public void setCategories(List<String> categories) {
-        this.categories = categories;
-    }
 }

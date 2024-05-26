@@ -9,29 +9,29 @@ import java.io.Serializable;
 import javax.annotation.processing.Generated;
 
 @Generated("jsonschema2pojo")
-public class Esport implements Serializable{
+public class Esport implements Serializable {
 
-    @SerializedName("id")
+    @SerializedName("esp_id")
     @Expose
-    private String id;
-    @SerializedName("nom")
+    private Integer espId;
+    @SerializedName("esp_nom")
     @Expose
-    private String nom;
+    private String espNom;
 
-    public String getId() {
-        return id;
+    public Integer getEspId() {
+        return espId;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setEspId(Integer espId) {
+        this.espId = espId;
     }
 
-    public String getNom() {
-        return nom;
+    public String getEspNom() {
+        return espNom;
     }
 
-    public void setNom(String nom) {
-        this.nom = nom;
+    public void setEspNom(String espNom) {
+        this.espNom = espNom;
     }
 
 }

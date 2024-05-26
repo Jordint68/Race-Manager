@@ -11,9 +11,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.navigation.NavController;
-import androidx.navigation.NavDirections;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -21,7 +19,6 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 
 import org.milaifontanals.racemanager.R;
 import org.milaifontanals.racemanager.modelsJson.Cursa;
-import org.milaifontanals.racemanager.ui.home.HomeFragment;
 
 import java.util.List;
 
@@ -46,12 +43,12 @@ public class CursesAdapter extends RecyclerView.Adapter<CursesAdapter.GridViewHo
     @Override
     public void onBindViewHolder(@NonNull CursesAdapter.GridViewHolder holder, int position) {
         Cursa cursaActual = lCurses.get(position);
-        holder.txvNom.setText(cursaActual.getNom());
-        holder.txvLloc.setText(cursaActual.getLloc());
-        holder.txvData.setText(cursaActual.getDataInici());
-        holder.txvWebsite.setText(cursaActual.getWeb());
-        holder.txvEsport.setText(cursaActual.getEsport().getNom());
-        String imgUrl = cursaActual.getFoto().toString();
+        holder.txvNom.setText(cursaActual.getCurNom());
+        holder.txvLloc.setText(cursaActual.getCurLloc());
+        holder.txvData.setText(cursaActual.getCurDataInici());
+        holder.txvWebsite.setText(cursaActual.getCurWeb());
+        holder.txvEsport.setText(cursaActual.getEsport().getEspNom());
+        String imgUrl = cursaActual.getCurFoto();
         ImageLoader.getInstance().displayImage(imgUrl, holder.imvFoto);
 
         holder.btnMostrarDetalls.setOnClickListener(view -> {

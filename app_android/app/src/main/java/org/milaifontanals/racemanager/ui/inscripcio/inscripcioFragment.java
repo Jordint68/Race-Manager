@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
@@ -49,6 +51,7 @@ public class inscripcioFragment extends Fragment {
     private String circuit_id;
     private String categoria_id;
 
+    private inscripcioFragment thisFragment = this;
 
     private Participant participant = new Participant();
 
@@ -77,6 +80,24 @@ public class inscripcioFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         mBinding = FragmentInscripcioBinding.inflate(getLayoutInflater());
+
+        Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
+        if (toolbar != null) {
+            ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+            if (((AppCompatActivity) getActivity()).getSupportActionBar() != null) {
+                ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Inscripció");
+                ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+                toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        NavController nav = NavHostFragment.findNavController(thisFragment);
+                        nav.navigate(R.id.action_inscripcioFragment_to_navigation_home);
+                    }
+                });
+            }
+        }
+
 
         recollirDadesDeCache();
 

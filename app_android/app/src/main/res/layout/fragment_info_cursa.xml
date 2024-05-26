@@ -108,7 +108,8 @@
                 android:text="NºInscrits / Límit"
                 android:textColor="@color/black"
                 app:layout_constraintBottom_toBottomOf="@id/imvFoto"
-                app:layout_constraintStart_toEndOf="@id/imvFoto" />
+                app:layout_constraintStart_toEndOf="@id/imvFoto"
+                android:visibility="invisible"/>
 
             <TextView
                 android:id="@+id/txvLink"

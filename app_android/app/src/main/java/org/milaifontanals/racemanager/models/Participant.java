@@ -1,14 +1,38 @@
 package org.milaifontanals.racemanager.models;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 import java.util.Date;
 
 public class Participant {
+
+    @SerializedName("par_nif")
+    @Expose
     private String nif;
+
+    @SerializedName("par_nom")
+    @Expose
     private String nom;
+
+    @SerializedName("par_cognoms")
+    @Expose
     private String cognoms;
+
+    @SerializedName("par_data_naixement")
+    @Expose
     private Date data_naix;
+
+    @SerializedName("par_telefon")
+    @Expose
     private String telefon;
+
+    @SerializedName("par_email")
+    @Expose
     private String email;
+
+    @SerializedName("par_es_federat")
+    @Expose
     private Boolean es_federat;
 
     public Participant(String nif, String nom, String cognoms, Date data_naix, String telefon, String email, Boolean es_federat) {

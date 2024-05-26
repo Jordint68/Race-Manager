@@ -1,92 +1,157 @@
 
 package org.milaifontanals.racemanager.modelsJson;
 
+import java.io.Serializable;
+import java.util.List;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.io.Serializable;
-
 import javax.annotation.processing.Generated;
 
-
+@Generated("jsonschema2pojo")
 public class Cursa implements Serializable {
 
-    @SerializedName("id")
+    @SerializedName("cur_id")
     @Expose
-    private String id;
-    @SerializedName("nom")
+    private Integer curId;
+    @SerializedName("cur_nom")
     @Expose
-    private String nom;
-    @SerializedName("dataInici")
+    private String curNom;
+    @SerializedName("cur_data_inici")
     @Expose
-    private String dataInici;
-    @SerializedName("dataFi")
+    private String curDataInici;
+    @SerializedName("cur_data_fi")
     @Expose
-    private String dataFi;
-    @SerializedName("lloc")
+    private String curDataFi;
+    @SerializedName("cur_lloc")
     @Expose
-    private String lloc;
+    private String curLloc;
+    @SerializedName("cur_esp_id")
+    @Expose
+    private Integer curEspId;
+    @SerializedName("cur_est_id")
+    @Expose
+    private Integer curEstId;
+    @SerializedName("cur_desc")
+    @Expose
+    private String curDesc;
+    @SerializedName("cur_limit_inscr")
+    @Expose
+    private Integer curLimitInscr;
+    @SerializedName("cur_foto")
+    @Expose
+    private String curFoto;
+    @SerializedName("cur_web")
+    @Expose
+    private String curWeb;
+    @SerializedName("cur_inscrits")
+    @Expose
+    private Integer curInscrits;
     @SerializedName("esport")
     @Expose
     private Esport esport;
     @SerializedName("estat")
     @Expose
     private Estat estat;
-    @SerializedName("descripcio")
+    @SerializedName("circuits")
     @Expose
-    private String descripcio;
-    @SerializedName("limit")
-    @Expose
-    private String limit;
-    @SerializedName("participants")
-    @Expose
-    private int participants;
-    @SerializedName("foto")
-    @Expose
-    private String foto;
-    @SerializedName("web")
-    @Expose
-    private String web;
+    private List<Circuit> circuits;
 
-    public String getId() {
-        return id;
+    public Integer getCurId() {
+        return curId;
     }
 
-    private void setId(String id) {
-        this.id = id;
+    public void setCurId(Integer curId) {
+        this.curId = curId;
     }
 
-    public String getNom() {
-        return nom;
+    public String getCurNom() {
+        return curNom;
     }
 
-    public void setNom(String nom) {
-        this.nom = nom;
+    public void setCurNom(String curNom) {
+        this.curNom = curNom;
     }
 
-    public String getDataInici() {
-        return dataInici;
+    public String getCurDataInici() {
+        return curDataInici;
     }
 
-    public void setDataInici(String dataInici) {
-        this.dataInici = dataInici;
+    public void setCurDataInici(String curDataInici) {
+        this.curDataInici = curDataInici;
     }
 
-    public String getDataFi() {
-        return dataFi;
+    public String getCurDataFi() {
+        return curDataFi;
     }
 
-    public void setDataFi(String dataFi) {
-        this.dataFi = dataFi;
+    public void setCurDataFi(String curDataFi) {
+        this.curDataFi = curDataFi;
     }
 
-    public String getLloc() {
-        return lloc;
+    public String getCurLloc() {
+        return curLloc;
     }
 
-    public void setLloc(String lloc) {
-        this.lloc = lloc;
+    public void setCurLloc(String curLloc) {
+        this.curLloc = curLloc;
+    }
+
+    public Integer getCurEspId() {
+        return curEspId;
+    }
+
+    public void setCurEspId(Integer curEspId) {
+        this.curEspId = curEspId;
+    }
+
+    public Integer getCurEstId() {
+        return curEstId;
+    }
+
+    public void setCurEstId(Integer curEstId) {
+        this.curEstId = curEstId;
+    }
+
+    public String getCurDesc() {
+        return curDesc;
+    }
+
+    public void setCurDesc(String curDesc) {
+        this.curDesc = curDesc;
+    }
+
+    public Integer getCurLimitInscr() {
+        return curLimitInscr;
+    }
+
+    public void setCurLimitInscr(Integer curLimitInscr) {
+        this.curLimitInscr = curLimitInscr;
+    }
+
+    public String getCurFoto() {
+        return curFoto;
+    }
+
+    public void setCurFoto(String curFoto) {
+        this.curFoto = curFoto;
+    }
+
+    public String getCurWeb() {
+        return curWeb;
+    }
+
+    public void setCurWeb(String curWeb) {
+        this.curWeb = curWeb;
+    }
+
+    public Integer getCurInscrits() {
+        return curInscrits;
+    }
+
+    public void setCurInscrits(Integer curInscrits) {
+        this.curInscrits = curInscrits;
     }
 
     public Esport getEsport() {
@@ -105,36 +170,12 @@ public class Cursa implements Serializable {
         this.estat = estat;
     }
 
-    public String getDescripcio() {
-        return descripcio;
+    public List<Circuit> getCircuits() {
+        return circuits;
     }
 
-    public void setDescripcio(String descripcio) {
-        this.descripcio = descripcio;
-    }
-
-    public String getLimit() {
-        return limit;
-    }
-
-    public void setLimit(String limit) {
-        this.limit = limit;
-    }
-
-    public String getFoto() {
-        return foto;
-    }
-
-    public void setFoto(String foto) {
-        this.foto = foto;
-    }
-
-    public String getWeb() {
-        return web;
-    }
-
-    public void setWeb(String web) {
-        this.web = web;
+    public void setCircuits(List<Circuit> circuits) {
+        this.circuits = circuits;
     }
 
 }

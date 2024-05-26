@@ -1,7 +1,6 @@
 package org.milaifontanals.racemanager.adapters;
 
 import android.content.Context;
-import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,7 +9,6 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import org.milaifontanals.racemanager.R;
@@ -19,10 +17,6 @@ import org.milaifontanals.racemanager.selectedListeners.ICircuitSelectedListener
 import org.milaifontanals.racemanager.ui.infoCursa.infoCursaFragment;
 import org.milaifontanals.racemanager.utils.Utils;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -60,19 +54,20 @@ public class CircuitsAdapter extends RecyclerView.Adapter<CircuitsAdapter.GridVi
     public void onBindViewHolder(@NonNull CircuitsAdapter.GridViewHolder holder, int position) {
         Circuit circuitActual = lCircuits.get(position);
 
-        String s_data_incorrecte  = circuitActual.getTemps();
+        String s_data_incorrecte  = circuitActual.getCirTempsEstimat();
         String s_data = utils.formatarData(s_data_incorrecte);
 
-        holder.txvNum.setText(circuitActual.getNum().toString());
-        holder.txvNom.setText(circuitActual.getNom().toString());
-        holder.txvDistancia.setText(circuitActual.getDistancia() + "");
+        holder.txvNum.setText(circuitActual.getCirNum().toString());
+        holder.txvNom.setText(circuitActual.getCirNom().toString());
+        holder.txvDistancia.setText(circuitActual.getCirDistancia() + "");
         holder.txvTemps.setText(s_data);
-        holder.txvPreu.setText(circuitActual.getPreu().toString());
+        holder.txvPreu.setText(circuitActual.getCirPreu().toString());
 
         holder.itemView.setOnClickListener(view -> {
             if (holder.getAdapterPosition() != this.idxCircuitSeleccionat) {
                 int posicioAnterior = this.idxCircuitSeleccionat;
                 this.idxCircuitSeleccionat = holder.getAdapterPosition();
+
                 this.notifyItemChanged(idxCircuitSeleccionat);
                 this.notifyItemChanged(posicioAnterior);
 
