@@ -1,13 +1,11 @@
 
-package org.milaifontanals.racemanager.modelsJson;
+package org.milaifontanals.racemanager.modelsJson.modelsRespostaResultats;
 
+import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.io.Serializable;
-import java.util.Date;
-
-public class Inscripcion implements Serializable {
+public class ResultsInscripcion {
 
     @SerializedName("ins_id")
     @Expose
@@ -17,7 +15,7 @@ public class Inscripcion implements Serializable {
     private Integer insParId;
     @SerializedName("ins_data")
     @Expose
-    private Date insData;
+    private String insData;
     @SerializedName("ins_dorsal")
     @Expose
     private Integer insDorsal;
@@ -33,10 +31,12 @@ public class Inscripcion implements Serializable {
     @SerializedName("ins_checkpoints")
     @Expose
     private Integer insCheckpoints;
-
     @SerializedName("participant")
     @Expose
-    private Participant participant;
+    private ResultsParticipant resultsParticipant;
+    @SerializedName("registres")
+    @Expose
+    private List<ResultsRegistre> resultsRegistres;
 
     public Integer getInsId() {
         return insId;
@@ -54,11 +54,11 @@ public class Inscripcion implements Serializable {
         this.insParId = insParId;
     }
 
-    public Date getInsData() {
+    public String getInsData() {
         return insData;
     }
 
-    public void setInsData(Date insData) {
+    public void setInsData(String insData) {
         this.insData = insData;
     }
 
@@ -100,6 +100,22 @@ public class Inscripcion implements Serializable {
 
     public void setInsCheckpoints(Integer insCheckpoints) {
         this.insCheckpoints = insCheckpoints;
+    }
+
+    public ResultsParticipant getParticipant() {
+        return resultsParticipant;
+    }
+
+    public void setParticipant(ResultsParticipant resultsParticipant) {
+        this.resultsParticipant = resultsParticipant;
+    }
+
+    public List<ResultsRegistre> getRegistres() {
+        return resultsRegistres;
+    }
+
+    public void setRegistres(List<ResultsRegistre> resultsRegistres) {
+        this.resultsRegistres = resultsRegistres;
     }
 
 }

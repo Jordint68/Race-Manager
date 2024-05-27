@@ -1,9 +1,10 @@
-package org.milaifontanals.racemanager.models;
+package org.milaifontanals.racemanager.modelsJson;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 public class Participant {
 
@@ -23,7 +24,7 @@ public class Participant {
 
     @SerializedName("par_data_naixement")
     @Expose
-    private Date data_naix;
+    private GregorianCalendar data_naix;
 
     @SerializedName("par_telefon")
     @Expose
@@ -37,7 +38,7 @@ public class Participant {
     @Expose
     private Boolean es_federat;
 
-    public Participant(String nif, String nom, String cognoms, Date data_naix, String telefon, String email, Boolean es_federat) {
+    public Participant(String nif, String nom, String cognoms, GregorianCalendar data_naix, String telefon, String email, Boolean es_federat) {
         this.nif = nif;
         this.nom = nom;
         this.cognoms = cognoms;
@@ -75,11 +76,11 @@ public class Participant {
         this.cognoms = cognoms;
     }
 
-    public Date getData_naix() {
+    public GregorianCalendar getData_naix() {
         return data_naix;
     }
 
-    public void setData_naix(Date data_naix) {
+    public void setData_naix(GregorianCalendar data_naix) {
         this.data_naix = data_naix;
     }
 

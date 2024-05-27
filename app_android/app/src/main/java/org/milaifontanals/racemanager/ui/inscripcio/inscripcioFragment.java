@@ -18,21 +18,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.DatePicker;
 
-import com.google.gson.JsonObject;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.milaifontanals.racemanager.API.APIManager;
 import org.milaifontanals.racemanager.R;
 import org.milaifontanals.racemanager.databinding.FragmentInscripcioBinding;
-import org.milaifontanals.racemanager.models.Participant;
+import org.milaifontanals.racemanager.modelsJson.Participant;
 import org.milaifontanals.racemanager.modelsJson.Inscripcion;
-import org.milaifontanals.racemanager.modelsJson.NewInscripcio;
+import org.milaifontanals.racemanager.modelsJson.modelsRespostaInscripcio.Example;
 import org.milaifontanals.racemanager.utils.Utils;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -147,8 +146,10 @@ public class inscripcioFragment extends Fragment {
 
         Date data = utils.convertirStringADate(s_data);
         if (data != null) {
+            GregorianCalendar calendar = new GregorianCalendar();
             mBinding.txvResDataNaix.setText(s_data);
-            participant.setData_naix(data);
+            calendar.setTime(data);
+            participant.setData_naix(calendar);
         }
 
     }
@@ -181,7 +182,7 @@ public class inscripcioFragment extends Fragment {
             mBinding.warnCognoms.setVisibility(View.VISIBLE);
         } else mBinding.warnCognoms.setVisibility(View.INVISIBLE);
 
-        Date dataNaix = participant.getData_naix();
+        GregorianCalendar dataNaix = participant.getData_naix();
         if (validaData(dataNaix)) {
             error = true;
             mBinding.warnDataNaix.setVisibility(View.VISIBLE);
@@ -221,17 +222,17 @@ public class inscripcioFragment extends Fragment {
 
     private void enviarParticipacio(String jsonString) {
         if(jsonString != null) {
-            APIManager.getInstance().storeInscripcio(jsonString, new Callback<NewInscripcio>() {
+            APIManager.getInstance().storeInscripcio(jsonString, new Callback<Example>() {
 
                 @Override
-                public void onResponse(Call<NewInscripcio> call, Response<NewInscripcio> response) {
+                public void onResponse(Call<Example> call, Response<Example> response) {
                     Log.d("XXX", "Participació enviada");
-                    Inscripcion resposta = response.body().inscripcion;
+                    Example resposta = response.body();
                     Log.d("XXX", resposta.toString());
                 }
 
                 @Override
-                public void onFailure(Call<NewInscripcio> call, Throwable t) {
+                public void onFailure(Call<Example> call, Throwable t) {
                     Log.d("ERROR", t.toString());
                 }
             });
@@ -244,9 +245,9 @@ public class inscripcioFragment extends Fragment {
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
             String dataNaix = "";
-            Date data = participant.getData_naix();
+            GregorianCalendar data = participant.getData_naix();
             if(data != null) {
-                dataNaix = dateFormat.format(data);
+                dataNaix = dateFormat.format(data.getTime());
             } else {
                 dataNaix = mBinding.txvResDataNaix.getText().toString();
             }
@@ -296,21 +297,20 @@ public class inscripcioFragment extends Fragment {
         return email != null && Patterns.EMAIL_ADDRESS.matcher(email).matches();
     }
 
-    private boolean validaData(Date dataNaix) {
+    private boolean validaData(GregorianCalendar dataNaix) {
         if (dataNaix == null) return false;
 
-        Calendar today = Calendar.getInstance();
-        today.set(Calendar.HOUR_OF_DAY, 0);
-        today.set(Calendar.MINUTE, 0);
-        today.set(Calendar.SECOND, 0);
-        today.set(Calendar.MILLISECOND, 0);
+        GregorianCalendar today = new GregorianCalendar();
+        today.set(GregorianCalendar.HOUR_OF_DAY, 0);
+        today.set(GregorianCalendar.MINUTE, 0);
+        today.set(GregorianCalendar.SECOND, 0);
+        today.set(GregorianCalendar.MILLISECOND, 0);
 
-        Calendar providedDate = Calendar.getInstance();
-        providedDate.setTime(dataNaix);
-        providedDate.set(Calendar.HOUR_OF_DAY, 0);
-        providedDate.set(Calendar.MINUTE, 0);
-        providedDate.set(Calendar.SECOND, 0);
-        providedDate.set(Calendar.MILLISECOND, 0);
+        GregorianCalendar providedDate = (GregorianCalendar) dataNaix.clone();
+        providedDate.set(GregorianCalendar.HOUR_OF_DAY, 0);
+        providedDate.set(GregorianCalendar.MINUTE, 0);
+        providedDate.set(GregorianCalendar.SECOND, 0);
+        providedDate.set(GregorianCalendar.MILLISECOND, 0);
 
         return providedDate.after(today);
     }
@@ -352,7 +352,9 @@ public class inscripcioFragment extends Fragment {
 
                         mBinding.txvResDataNaix.setText(utils.formatarData(selectedDate));
 
-                        participant.setData_naix(selectedDate);
+                        GregorianCalendar calendar = new GregorianCalendar();
+                        calendar.setTime(selectedDate);
+                        participant.setData_naix(calendar);
                     }
                 },
                 year, month, day);

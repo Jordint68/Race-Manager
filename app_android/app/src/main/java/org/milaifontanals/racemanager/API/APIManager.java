@@ -1,22 +1,30 @@
 package org.milaifontanals.racemanager.API;
 
-import android.util.Log;
-
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParseException;
+import com.google.gson.JsonPrimitive;
+import com.google.gson.JsonSerializationContext;
+import com.google.gson.JsonSerializer;
 import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
 import com.google.gson.stream.JsonWriter;
 
-import org.milaifontanals.racemanager.modelsJson.Inscripcion;
-import org.milaifontanals.racemanager.modelsJson.NewInscripcio;
 import org.milaifontanals.racemanager.modelsJson.ResponseGetCurses;
+import org.milaifontanals.racemanager.modelsJson.modelsRespostaInscripcio.Example;
+import org.milaifontanals.racemanager.modelsJson.modelsRespostaResultats.ResultsResponse;
 
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -25,10 +33,15 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class APIManager {
     // Constant amb la la base url
-//    private final String BASE_URL = "https://raw.githubusercontent.com/acalvet2k23/racemanagerjson/main/";
+
+    // url casa
 //    private final String BASE_URL = "http://192.168.1.35/projecteApp/public/api/";
+
+    // URL per al simulador
     private final String BASE_URL = "http://10.0.2.2/projecteApp/public/api/";
 
+    // url clase
+//    private final String BASE_URL = "http://10.100.0.125/projecteApp/public/api/";
     private static APIManager mInstance;
     private API mApiService;
 
@@ -37,6 +50,7 @@ public class APIManager {
         Gson gsonBuilder = new GsonBuilder()
                 .registerTypeAdapter(Date.class, new DateTypeAdapter())
                 .registerTypeAdapter(Boolean.class, new TinyIntToBooleanTypeAdapter())
+                .registerTypeAdapter(GregorianCalendar.class, new GregorianCalendarTypeAdapter())
                 .create();
 
         Retrofit retrofit = new Retrofit.Builder()
@@ -60,31 +74,28 @@ public class APIManager {
         call.enqueue(cb);
     }
 
-//    public void getCircuits(int codi_cursa, Callback<ResponseGetCircuits> cb) {
-//        Call<ResponseGetCircuits> call = mApiService.getCircuits(codi_cursa);
-//        call.enqueue(cb);
-//    }
-
     public void getAllCurses(Callback<ResponseGetCurses> cb) {
         Call<ResponseGetCurses> call = mApiService.getAllCurses();
         call.enqueue(cb);
     }
 
-    public void storeInscripcio(String json, Callback<NewInscripcio> cb) {
-        try {
-            Call<NewInscripcio> call = mApiService.postInscripcio(json);
-            call.enqueue(cb);
-        } catch(IllegalArgumentException ex) {
-            // Peta perque les clases del JSON de resposta i les meves son iguales
-            Log.d("ERROR", ex.toString());
-        }
+    public void storeInscripcio(String json, Callback<Example> cb) {
+        Call<Example> call = mApiService.postInscripcio(json);
+        call.enqueue(cb);
     }
+
+    public void getAllCircuitsCategoria(int cat_id, int cir_id, Callback<ResultsResponse> cb) {
+        Call<ResultsResponse> call = mApiService.getAllCircuitsCategoria(cat_id, cir_id);
+        call.enqueue(cb);
+    }
+
+
 
 }
 
 class DateTypeAdapter extends TypeAdapter<Date> {
 
-    private final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    private final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     @Override
     public void write(JsonWriter out, Date value) throws IOException {
@@ -125,5 +136,36 @@ class TinyIntToBooleanTypeAdapter extends TypeAdapter<Boolean> {
         }
         int intValue = in.nextInt();
         return intValue != 0;
+    }
+}
+
+class GregorianCalendarTypeAdapter implements JsonSerializer<GregorianCalendar>, JsonDeserializer<GregorianCalendar> {
+
+    private final SimpleDateFormat dateFormat;
+
+    public GregorianCalendarTypeAdapter() {
+        dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    }
+
+    @Override
+    public JsonElement serialize(GregorianCalendar src, Type typeOfSrc, JsonSerializationContext context) {
+        String formattedDate = dateFormat.format(src.getTime());
+        return new JsonPrimitive(formattedDate);
+    }
+
+    @Override
+    public GregorianCalendar deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context)
+            throws JsonParseException {
+        try {
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(dateFormat.parse(json.getAsString()));
+            return new GregorianCalendar(
+                    calendar.get(Calendar.YEAR),
+                    calendar.get(Calendar.MONTH),
+                    calendar.get(Calendar.DAY_OF_MONTH)
+            );
+        } catch (ParseException e) {
+            throw new JsonParseException("No es pot transformar la data: " + json.getAsString(), e);
+        }
     }
 }

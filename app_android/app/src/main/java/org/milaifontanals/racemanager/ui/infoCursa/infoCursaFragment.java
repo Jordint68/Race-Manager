@@ -51,8 +51,9 @@ public class infoCursaFragment
 
     private List<Circuit> lCircuits = new ArrayList<>();
     private List<Category> lCats = new ArrayList<>();
-
     private infoCursaFragment thisFragment = this;
+
+    private int onAnar;
 
 
     private Circuit circuitSeleccionat = null;
@@ -75,12 +76,17 @@ public class infoCursaFragment
         Bundle bundle = this.getArguments();
         if (bundle != null) {
             cursa = (Cursa) bundle.getSerializable(CLAUCURSA);
+            onAnar = bundle.getInt("Resultats");
 
             lCircuits = cursa.getCircuits();
         }
     }
 
     private void mostrarDades() {
+        if(onAnar == 1) {
+            mBinding.btnParticipar.setText("Veure Resultats");
+        }
+
         String imgUrl = cursa.getCurFoto();
         ImageLoader.getInstance().displayImage(imgUrl, mBinding.imvFoto);
         mBinding.txvNom.setText(cursa.getCurNom());
@@ -109,7 +115,12 @@ public class infoCursaFragment
             bundle.putString(inscripcioFragment.CLAUCIRCUIT, circuitSeleccionat.getCirId().toString());
             bundle.putString(inscripcioFragment.CLAUCURSA, cursa.getCurId().toString());
             bundle.putString(inscripcioFragment.CLAUCCC, categoriaSeleccionada.getCccId().toString());
-            nav.navigate(R.id.action_infoCursaFragment_to_inscripcioFragment, bundle);
+
+            if(onAnar != 1) {
+                nav.navigate(R.id.action_infoCursaFragment_to_inscripcioFragment, bundle);
+            } else {
+                nav.navigate(R.id.action_infoCursaFragment_to_resultatsFragment, bundle);
+            }
         } else {
             mostrar_circuits();
             mBinding.btnParticipar.setEnabled(false);
@@ -136,7 +147,12 @@ public class infoCursaFragment
                     @Override
                     public void onClick(View v) {
                         NavController nav = NavHostFragment.findNavController(thisFragment);
-                        nav.navigate(R.id.action_infoCursaFragment_to_navigation_home);
+
+                        if(onAnar != 1) {
+                            nav.navigate(R.id.action_infoCursaFragment_to_navigation_home);
+                        } else {
+                            nav.navigate(R.id.action_infoCursaFragment_to_navigation_dashboard);
+                        }
                     }
                 });
             }

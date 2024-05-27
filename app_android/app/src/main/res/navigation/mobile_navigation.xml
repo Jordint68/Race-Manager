@@ -38,6 +38,9 @@
         <action
             android:id="@+id/action_infoCursaFragment_to_resultatsFragment"
             app:destination="@id/resultatsFragment" />
+        <action
+            android:id="@+id/action_infoCursaFragment_to_navigation_dashboard"
+            app:destination="@id/navigation_dashboard" />
     </fragment>
     <fragment
         android:id="@+id/inscripcioFragment"
