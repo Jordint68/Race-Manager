@@ -8,15 +8,20 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import org.milaifontanals.racemanager.R;
 import org.milaifontanals.racemanager.databinding.FragmentResultatsBinding;
+import org.milaifontanals.racemanager.modelsJson.modelsRespostaResultats.ResultsResponse;
+import org.milaifontanals.racemanager.selectedListeners.apiResponseListener;
 import org.milaifontanals.racemanager.ui.inscripcio.inscripcioFragment;
 
-public class resultatsFragment extends Fragment {
+public class resultatsFragment
+        extends Fragment
+        implements apiResponseListener {
     private FragmentResultatsBinding mBinding;
 
     private resultatsFragment thisFragment = this;
@@ -76,12 +81,20 @@ public class resultatsFragment extends Fragment {
             }
         }
 
-        obtenirResultats() {
+        int cat_id = Integer.parseInt(categoria_id);
+        int cir_id = Integer.parseInt(circuit_id);
 
-        }
+        ThreadBackground thBack = new ThreadBackground(cat_id, cir_id, this);
+        thBack.start();
 
 
 
         return mBinding.getRoot();
+    }
+
+    @Override
+    public void onApiResponseReceived(ResultsResponse data) {
+        // Event que s'activa cada cop que es reben resultat
+        
     }
 }
