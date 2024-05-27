@@ -105,10 +105,10 @@ public class infoCursaFragment
             Bundle bundle = new Bundle();
 
             // Ha de ser la id
-            bundle.putString(inscripcioFragment.CLAUCATEGORIA, categoriaSeleccionada.getCategoria().getCatNom());
+            bundle.putString(inscripcioFragment.CLAUCATEGORIA, categoriaSeleccionada.getCategoria().getCatId().toString());
             bundle.putString(inscripcioFragment.CLAUCIRCUIT, circuitSeleccionat.getCirId().toString());
             bundle.putString(inscripcioFragment.CLAUCURSA, cursa.getCurId().toString());
-
+            bundle.putString(inscripcioFragment.CLAUCCC, categoriaSeleccionada.getCccId().toString());
             nav.navigate(R.id.action_infoCursaFragment_to_inscripcioFragment, bundle);
         } else {
             mostrar_circuits();

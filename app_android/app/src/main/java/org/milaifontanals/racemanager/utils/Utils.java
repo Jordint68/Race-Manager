@@ -44,6 +44,8 @@ public class Utils {
             return sdfOutput.format(date);
         }
     }
+    
+    
 
     public Date convertirStringADate(String s_data) {
         String pattern = "dd/MM/yyyy";

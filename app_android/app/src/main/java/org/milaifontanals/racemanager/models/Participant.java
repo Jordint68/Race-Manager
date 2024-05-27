@@ -7,10 +7,12 @@ import java.util.Date;
 
 public class Participant {
 
+    @SerializedName("par_id")
+    @Expose
+    private int id;
     @SerializedName("par_nif")
     @Expose
     private String nif;
-
     @SerializedName("par_nom")
     @Expose
     private String nom;

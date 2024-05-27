@@ -18,13 +18,25 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.DatePicker;
 
+import com.google.gson.JsonObject;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.milaifontanals.racemanager.API.APIManager;
 import org.milaifontanals.racemanager.R;
 import org.milaifontanals.racemanager.databinding.FragmentInscripcioBinding;
 import org.milaifontanals.racemanager.models.Participant;
+import org.milaifontanals.racemanager.modelsJson.Inscripcion;
+import org.milaifontanals.racemanager.modelsJson.NewInscripcio;
 import org.milaifontanals.racemanager.utils.Utils;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class inscripcioFragment extends Fragment {
     private Utils utils = new Utils();
@@ -32,6 +44,7 @@ public class inscripcioFragment extends Fragment {
     public static final String CLAUCURSA = "param_cursa";
     public static final String CLAUCIRCUIT = "param_circuit";
     public static final String CLAUCATEGORIA = "param_categoria";
+    public static final String CLAUCCC = "param_ccc";
 
     private static final String PREF_NIF = "NIF";
     private static final String PREF_NOM = "NOM";
@@ -50,6 +63,7 @@ public class inscripcioFragment extends Fragment {
     private String cursa_id;
     private String circuit_id;
     private String categoria_id;
+    private String ccc_id;
 
     private inscripcioFragment thisFragment = this;
 
@@ -72,6 +86,7 @@ public class inscripcioFragment extends Fragment {
             cursa_id = bundle.getString(CLAUCURSA);
             circuit_id = bundle.getString(CLAUCIRCUIT);
             categoria_id = bundle.getString(CLAUCATEGORIA);
+            ccc_id = bundle.getString(CLAUCCC);
         }
     }
 
@@ -194,11 +209,75 @@ public class inscripcioFragment extends Fragment {
 
             // Pujar el participant al webservice
 
+            String jsonString = formarJson();
+
+            enviarParticipacio(jsonString);
 
             // Es torna a la pàgina principal
             NavController nav = NavHostFragment.findNavController(this);
             nav.navigate(R.id.action_inscripcioFragment_to_navigation_home);
         }
+    }
+
+    private void enviarParticipacio(String jsonString) {
+        if(jsonString != null) {
+            APIManager.getInstance().storeInscripcio(jsonString, new Callback<NewInscripcio>() {
+
+                @Override
+                public void onResponse(Call<NewInscripcio> call, Response<NewInscripcio> response) {
+                    Log.d("XXX", "Participació enviada");
+                    Inscripcion resposta = response.body().inscripcion;
+                    Log.d("XXX", resposta.toString());
+                }
+
+                @Override
+                public void onFailure(Call<NewInscripcio> call, Throwable t) {
+                    Log.d("ERROR", t.toString());
+                }
+            });
+        }
+    }
+
+    private String formarJson() {
+        JSONObject json = new JSONObject();
+        try {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+            String dataNaix = "";
+            Date data = participant.getData_naix();
+            if(data != null) {
+                dataNaix = dateFormat.format(data);
+            } else {
+                dataNaix = mBinding.txvResDataNaix.getText().toString();
+            }
+
+
+
+            JSONObject jsonInscripcio = new JSONObject();
+            jsonInscripcio.put("ins_ccc_id", ccc_id);
+            jsonInscripcio.put("ins_retirat", "0");
+
+            JSONObject jsonParticipant = new JSONObject();
+            jsonParticipant.put("par_cognoms", participant.getCognoms());
+            jsonParticipant.put("par_data_naixement", dataNaix);
+            jsonParticipant.put("par_email", participant.getEmail());
+            jsonParticipant.put("par_es_federat", participant.getEs_federat());
+            jsonParticipant.put("par_nif", participant.getNif());
+            jsonParticipant.put("par_nom", participant.getNom());
+            jsonParticipant.put("par_telefon", participant.getTelefon());
+
+            json.put("inscripcio", jsonInscripcio);
+            json.put("participant", jsonParticipant);
+
+            String jsonString = json.toString();
+            Log.d("XXX", jsonString);
+
+            return jsonString;
+        } catch(JSONException ex) {
+            Log.d("ERROR", ex.getMessage().toString());
+        }
+
+        return null;
     }
 
     private void desarDadesCache() {

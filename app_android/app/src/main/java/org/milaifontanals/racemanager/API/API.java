@@ -20,10 +20,8 @@ public interface API {
     @GET("get_all_curses")
     Call<ResponseGetCurses> getAllCurses();
 
-
-
-    @POST("storeInscripcio")
+    @POST("store_inscripcio")
     Call postInscripcio(
-
+        @Body String json
     );
 }

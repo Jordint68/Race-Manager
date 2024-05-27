@@ -19,7 +19,11 @@
         android:id="@+id/navigation_dashboard"
         android:name="org.milaifontanals.racemanager.ui.dashboard.DashboardFragment"
         android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
+        tools:layout="@layout/fragment_dashboard" >
+        <action
+            android:id="@+id/action_navigation_dashboard_to_infoCursaFragment"
+            app:destination="@id/infoCursaFragment" />
+    </fragment>
     <fragment
         android:id="@+id/infoCursaFragment"
         android:name="org.milaifontanals.racemanager.ui.infoCursa.infoCursaFragment"
@@ -31,6 +35,9 @@
         <action
             android:id="@+id/action_infoCursaFragment_to_inscripcioFragment"
             app:destination="@id/inscripcioFragment" />
+        <action
+            android:id="@+id/action_infoCursaFragment_to_resultatsFragment"
+            app:destination="@id/resultatsFragment" />
     </fragment>
     <fragment
         android:id="@+id/inscripcioFragment"
@@ -42,6 +49,18 @@
             app:destination="@id/navigation_home" />
         <action
             android:id="@+id/action_inscripcioFragment_to_infoCursaFragment"
+            app:destination="@id/infoCursaFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/resultatsFragment"
+        android:name="org.milaifontanals.racemanager.ui.resultats.resultatsFragment"
+        android:label="fragment_resultats"
+        tools:layout="@layout/fragment_resultats" >
+        <action
+            android:id="@+id/action_resultatsFragment_to_navigation_home"
+            app:destination="@id/navigation_home" />
+        <action
+            android:id="@+id/action_resultatsFragment_to_infoCursaFragment"
             app:destination="@id/infoCursaFragment" />
     </fragment>
 

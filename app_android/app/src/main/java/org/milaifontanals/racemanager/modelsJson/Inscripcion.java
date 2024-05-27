@@ -4,7 +4,10 @@ package org.milaifontanals.racemanager.modelsJson;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import org.milaifontanals.racemanager.models.Participant;
+
 import java.io.Serializable;
+import java.util.Date;
 
 public class Inscripcion implements Serializable {
 
@@ -16,7 +19,7 @@ public class Inscripcion implements Serializable {
     private Integer insParId;
     @SerializedName("ins_data")
     @Expose
-    private String insData;
+    private Date insData;
     @SerializedName("ins_dorsal")
     @Expose
     private Integer insDorsal;
@@ -32,6 +35,10 @@ public class Inscripcion implements Serializable {
     @SerializedName("ins_checkpoints")
     @Expose
     private Integer insCheckpoints;
+
+    @SerializedName("participant")
+    @Expose
+    private Participant participant;
 
     public Integer getInsId() {
         return insId;
@@ -49,11 +56,11 @@ public class Inscripcion implements Serializable {
         this.insParId = insParId;
     }
 
-    public String getInsData() {
+    public Date getInsData() {
         return insData;
     }
 
-    public void setInsData(String insData) {
+    public void setInsData(Date insData) {
         this.insData = insData;
     }
 

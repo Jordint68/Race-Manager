@@ -19,6 +19,8 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 
 import org.milaifontanals.racemanager.R;
 import org.milaifontanals.racemanager.modelsJson.Cursa;
+import org.milaifontanals.racemanager.ui.dashboard.DashboardFragment;
+import org.milaifontanals.racemanager.ui.home.HomeFragment;
 
 import java.util.List;
 
@@ -55,8 +57,18 @@ public class CursesAdapter extends RecyclerView.Adapter<CursesAdapter.GridViewHo
             NavController nav = NavHostFragment.findNavController(fragHome);
             Bundle bundle = new Bundle();
             bundle.putSerializable("Cursa", cursaActual);
+
 //            NavDirections n = HomeFragmentDirections.actionNavigationHomeToDetallsFragment2();
-            nav.navigate(R.id.action_navigation_home_to_infoCursaFragment, bundle);
+
+            if(fragHome instanceof HomeFragment) {
+                bundle.putInt("Resultats", 0);
+                nav.navigate(R.id.action_navigation_home_to_infoCursaFragment, bundle);
+
+            } else if(fragHome instanceof DashboardFragment) {
+                bundle.putInt("Resultats", 1);
+                nav.navigate(R.id.action_navigation_dashboard_to_infoCursaFragment, bundle);
+            }
+
         });
     }
 
