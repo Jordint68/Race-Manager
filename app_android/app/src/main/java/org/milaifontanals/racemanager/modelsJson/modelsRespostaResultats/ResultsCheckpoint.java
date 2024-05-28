@@ -11,7 +11,7 @@ public class ResultsCheckpoint {
     private Integer chkId;
     @SerializedName("chk_km")
     @Expose
-    private Integer chkKm;
+    private Double chkKm;
     @SerializedName("chk_cir_id")
     @Expose
     private Integer chkCirId;
@@ -24,11 +24,11 @@ public class ResultsCheckpoint {
         this.chkId = chkId;
     }
 
-    public Integer getChkKm() {
+    public Double getChkKm() {
         return chkKm;
     }
 
-    public void setChkKm(Integer chkKm) {
+    public void setChkKm(Double chkKm) {
         this.chkKm = chkKm;
     }
 

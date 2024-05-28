@@ -41,7 +41,7 @@ public class APIManager {
     private final String BASE_URL = "http://10.0.2.2/projecteApp/public/api/";
 
     // url clase
-//    private final String BASE_URL = "http://10.100.0.125/projecteApp/public/api/";
+//    private final String BASE_URL = "http://10.132.10.19/projecteApp/public/api/";
     private static APIManager mInstance;
     private API mApiService;
 

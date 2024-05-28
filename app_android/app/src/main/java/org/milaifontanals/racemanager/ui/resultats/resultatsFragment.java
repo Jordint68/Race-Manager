@@ -7,6 +7,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,15 +15,21 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import org.milaifontanals.racemanager.R;
+import org.milaifontanals.racemanager.adapters.ResultatsAdapter;
 import org.milaifontanals.racemanager.databinding.FragmentResultatsBinding;
+import org.milaifontanals.racemanager.modelsAuxiliars.ModelMillorResultatParticipant;
 import org.milaifontanals.racemanager.modelsJson.modelsRespostaResultats.ResultsResponse;
 import org.milaifontanals.racemanager.selectedListeners.apiResponseListener;
 import org.milaifontanals.racemanager.ui.inscripcio.inscripcioFragment;
+
+import java.util.List;
 
 public class resultatsFragment
         extends Fragment
         implements apiResponseListener {
     private FragmentResultatsBinding mBinding;
+
+    private ResultatsAdapter adapter;
 
     private resultatsFragment thisFragment = this;
 
@@ -93,8 +100,13 @@ public class resultatsFragment
     }
 
     @Override
-    public void onApiResponseReceived(ResultsResponse data) {
+    public void onApiResponseReceived(List<ModelMillorResultatParticipant> data) {
         // Event que s'activa cada cop que es reben resultat
-        
+//        Log.d("XXX", data.toString());
+
+        mBinding.rcvResultats.setLayoutManager(new LinearLayoutManager(resultatsFragment.this.getContext(), LinearLayoutManager.VERTICAL, false));
+        adapter = new ResultatsAdapter(data, resultatsFragment.this.getContext());
+        mBinding.rcvResultats.setAdapter(adapter);
+
     }
 }
