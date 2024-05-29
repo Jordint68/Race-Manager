@@ -9,7 +9,6 @@ import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,9 +17,7 @@ import org.milaifontanals.racemanager.R;
 import org.milaifontanals.racemanager.adapters.ResultatsAdapter;
 import org.milaifontanals.racemanager.databinding.FragmentResultatsBinding;
 import org.milaifontanals.racemanager.modelsAuxiliars.ModelMillorResultatParticipant;
-import org.milaifontanals.racemanager.modelsJson.modelsRespostaResultats.ResultsResponse;
 import org.milaifontanals.racemanager.selectedListeners.apiResponseListener;
-import org.milaifontanals.racemanager.ui.inscripcio.inscripcioFragment;
 
 import java.util.List;
 

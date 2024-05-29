@@ -16,7 +16,7 @@ import com.google.gson.stream.JsonWriter;
 
 import org.milaifontanals.racemanager.modelsJson.ResponseGetCurses;
 import org.milaifontanals.racemanager.modelsJson.modelsRespostaInscripcio.Example;
-import org.milaifontanals.racemanager.modelsJson.modelsRespostaResultats.ResultsResponse;
+import org.milaifontanals.racemanager.modelsJson.modelsRespostaResultats.ResultsExample;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
@@ -34,14 +34,16 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class APIManager {
     // Constant amb la la base url
 
+
+
     // url casa
 //    private final String BASE_URL = "http://192.168.1.35/projecteApp/public/api/";
 
     // URL per al simulador
-    private final String BASE_URL = "http://10.0.2.2/projecteApp/public/api/";
+//    private final String BASE_URL = "http://10.0.2.2/projecteApp/public/api/";
 
     // url clase
-//    private final String BASE_URL = "http://10.132.10.19/projecteApp/public/api/";
+    private final String BASE_URL = "http://192.168.3.216/projecteApp/public/api/";
     private static APIManager mInstance;
     private API mApiService;
 
@@ -84,8 +86,8 @@ public class APIManager {
         call.enqueue(cb);
     }
 
-    public void getAllCircuitsCategoria(int cat_id, int cir_id, Callback<ResultsResponse> cb) {
-        Call<ResultsResponse> call = mApiService.getAllCircuitsCategoria(cat_id, cir_id);
+    public void getAllCircuitsCategoria(Callback<ResultsExample> cb) {
+        Call<ResultsExample> call = mApiService.getAllCircuitsCategoria();
         call.enqueue(cb);
     }
 

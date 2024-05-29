@@ -11,8 +11,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import org.milaifontanals.racemanager.R;
 import org.milaifontanals.racemanager.modelsAuxiliars.ModelMillorResultatParticipant;
-import org.milaifontanals.racemanager.modelsJson.modelsRespostaResultats.ResultsInscripcion;
-import org.milaifontanals.racemanager.utils.Utils;
 
 import java.util.List;
 

@@ -1,11 +1,11 @@
 
 package org.milaifontanals.racemanager.modelsJson.modelsRespostaResultats;
 
-import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class ResultsInscripcion {
+
+public class Resultsnscripcion {
 
     @SerializedName("ins_id")
     @Expose
@@ -31,12 +31,6 @@ public class ResultsInscripcion {
     @SerializedName("ins_checkpoints")
     @Expose
     private Integer insCheckpoints;
-    @SerializedName("participant")
-    @Expose
-    private ResultsParticipant resultsParticipant;
-    @SerializedName("registres")
-    @Expose
-    private List<ResultsRegistre> resultsRegistres;
 
     public Integer getInsId() {
         return insId;
@@ -100,22 +94,6 @@ public class ResultsInscripcion {
 
     public void setInsCheckpoints(Integer insCheckpoints) {
         this.insCheckpoints = insCheckpoints;
-    }
-
-    public ResultsParticipant getParticipant() {
-        return resultsParticipant;
-    }
-
-    public void setParticipant(ResultsParticipant resultsParticipant) {
-        this.resultsParticipant = resultsParticipant;
-    }
-
-    public List<ResultsRegistre> getRegistres() {
-        return resultsRegistres;
-    }
-
-    public void setRegistres(List<ResultsRegistre> resultsRegistres) {
-        this.resultsRegistres = resultsRegistres;
     }
 
 }
