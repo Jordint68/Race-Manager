@@ -1,14 +1,15 @@
 package org.milaifontanals.racemanager.API;
 
 import org.milaifontanals.racemanager.modelsJson.ResponseGetCurses;
+import org.milaifontanals.racemanager.modelsJson.modelsRespostaCircuitCategoria.CirCatExample;
 import org.milaifontanals.racemanager.modelsJson.modelsRespostaInscripcio.Example;
+import org.milaifontanals.racemanager.modelsJson.modelsRespostaParticipants.ParticipantsExample;
 import org.milaifontanals.racemanager.modelsJson.modelsRespostaResultats.ResultsExample;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
-import retrofit2.http.Query;
 
 public interface API {
     @GET("get_all_curses")
@@ -18,9 +19,13 @@ public interface API {
     Call<Example> postInscripcio(
         @Body String json
     );
+    @GET("get_all_registres")
+    Call<ResultsExample> getAllRegistres();
 
     @GET("get_all_circuits_categoria")
-    Call<ResultsExample> getAllCircuitsCategoria();
+    Call<CirCatExample> getAllCircuitsCategoria();
 
+    @GET("get_all_participants")
+    Call<ParticipantsExample> getAllParticipants();
 
 }

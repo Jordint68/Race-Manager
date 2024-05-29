@@ -7,16 +7,16 @@ import com.google.gson.annotations.SerializedName;
 
 public class ResultsExample {
 
-    @SerializedName("circuit_categoria")
+    @SerializedName("registres")
     @Expose
-    private List<ResultsCircuitCategorium> circuitCategoria;
+    private List<ResultsRegistre> registres;
 
-    public List<ResultsCircuitCategorium> getCircuitCategoria() {
-        return circuitCategoria;
+    public List<ResultsRegistre> getRegistres() {
+        return registres;
     }
 
-    public void setCircuitCategoria(List<ResultsCircuitCategorium> circuitCategoria) {
-        this.circuitCategoria = circuitCategoria;
+    public void setRegistres(List<ResultsRegistre> registres) {
+        this.registres = registres;
     }
 
 }

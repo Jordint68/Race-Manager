@@ -1,14 +1,17 @@
 package org.milaifontanals.racemanager.ui.resultats;
 
+import static java.lang.Thread.sleep;
+
 import android.util.Log;
 
 import org.milaifontanals.racemanager.API.APIManager;
 import org.milaifontanals.racemanager.modelsAuxiliars.ModelMillorResultatParticipant;
-import org.milaifontanals.racemanager.modelsJson.modelsRespostaResultats.ResultsCategoria;
-import org.milaifontanals.racemanager.modelsJson.modelsRespostaResultats.ResultsCircuit;
-import org.milaifontanals.racemanager.modelsJson.modelsRespostaResultats.ResultsCircuitCategorium;
+import org.milaifontanals.racemanager.modelsJson.Participant;
+import org.milaifontanals.racemanager.modelsJson.modelsRespostaCircuitCategoria.CirCatDades;
+import org.milaifontanals.racemanager.modelsJson.modelsRespostaCircuitCategoria.CirCatExample;
+import org.milaifontanals.racemanager.modelsJson.modelsRespostaParticipants.ParticipantsExample;
 import org.milaifontanals.racemanager.modelsJson.modelsRespostaResultats.ResultsExample;
-import org.milaifontanals.racemanager.modelsJson.modelsRespostaResultats.Resultsnscripcion;
+import org.milaifontanals.racemanager.modelsJson.modelsRespostaResultats.ResultsRegistre;
 import org.milaifontanals.racemanager.selectedListeners.apiResponseListener;
 
 import java.text.ParseException;
@@ -30,16 +33,33 @@ public class ThreadBackground {
     private int cat_id;
     private int cir_id;
 
+    private int ccc_id;
+
     private apiResponseListener listener;
 
-    public ThreadBackground(int id_categoria, int id_circuit, apiResponseListener arListener) {
+    private List<Participant> totsElsParticipants = new ArrayList<>();
+
+    public ThreadBackground(int id_categoria, int id_circuit, int ccc_id, apiResponseListener arListener) {
         this.cat_id = id_categoria;
         this.cir_id = id_circuit;
+        this.ccc_id = ccc_id;
         this.listener = arListener;
     }
 
     private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
     public void start() {
+        /*
+            Abans de inicia el thread faig una cerca del circuit-categoria per a poder trobar el ccc_id;
+            Faig una cerca dels participants
+         */
+//        obtenirCCCId();
+        obtenirParticipants();
+        try {
+            sleep(1000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
         final Runnable apiCaller = new Runnable() {
             public void run() {
                 makeApiCall();
@@ -48,14 +68,48 @@ public class ThreadBackground {
         scheduler.scheduleAtFixedRate(apiCaller, 0, 15, TimeUnit.SECONDS);
     }
 
+    private void obtenirParticipants() {
+        APIManager.getInstance().getAllParticipants(new Callback<ParticipantsExample>() {
+            @Override
+            public void onResponse(Call<ParticipantsExample> call, Response<ParticipantsExample> response) {
+                totsElsParticipants = response.body().getParticipants();
+            }
+
+            @Override
+            public void onFailure(Call<ParticipantsExample> call, Throwable t) {
+                Log.d("ERROR", "Error en obtenir els participants - " + t.getMessage());
+            }
+        });
+    }
+
+//    private void obtenirCCCId() {
+//        APIManager.getInstance().getAllCircuitsCategoria(new Callback<CirCatExample>() {
+//            @Override
+//            public void onResponse(Call<CirCatExample> call, Response<CirCatExample> response) {
+//                List<CirCatDades> lCirCats = response.body().getCircuit_categoria();
+//
+//                for (CirCatDades circuit_categoria : lCirCats) {
+//                    if((circuit_categoria.getCircuit().getCirId() == cir_id) && (circuit_categoria.getCategoria().getCatId() == cat_id)) {
+//                        ccc_id = circuit_categoria.getCccId();
+//                    }
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<CirCatExample> call, Throwable t) {
+//
+//            }
+//        });
+//    }
+
     private void makeApiCall() {
-        APIManager.getInstance().getAllCircuitsCategoria(new Callback<ResultsExample>() {
+        APIManager.getInstance().getAllRegistres(new Callback<ResultsExample>() {
             @Override
             public void onResponse(Call<ResultsExample> call, Response<ResultsExample> response) {
                 ResultsExample res = response.body();
-                List<ResultsCircuitCategorium> results = res.getCircuitCategoria();
+                List<ResultsRegistre> results = res.getRegistres();
                 if (listener != null) {
-                    List<ModelMillorResultatParticipant> resultats = ordenarfiltrarRes(results);
+                    List<ModelMillorResultatParticipant> resultats =  ordenarfiltrarRes(results);
                     listener.onApiResponseReceived(resultats);
                 }
             }
@@ -65,6 +119,54 @@ public class ThreadBackground {
                 Log.d("Error", "ThreadResultats - " + t.toString());
             }
         });
+    }
+
+    private List<ModelMillorResultatParticipant> ordenarfiltrarRes(List<ResultsRegistre> results) {
+        // Obtenim una llista de resultants on sol hi tenim els d'aquesta cursa, circuit i categoria
+        results = filtrarPerCircuitICategoria(results);
+        return agruparITrobaMillorResultat(results);
+    }
+
+    private List<ModelMillorResultatParticipant> agruparITrobaMillorResultat(List<ResultsRegistre> results) {
+        List<ModelMillorResultatParticipant> lFinal = new ArrayList<>();
+
+        for (ResultsRegistre rr : results) {
+            int idParticipant = rr.getInscripcio().getInsParId();
+            short participantTrobat = 0;
+            for(ModelMillorResultatParticipant mm : lFinal) {
+                if(mm.getParId() == idParticipant) {
+                    participantTrobat = 1;
+                    if(mm.getKmsCheckpoint() < rr.getCheckpoint().getChkKm()) {
+                        // Modifiquem les dades amb puntuacions millors:
+                        mm.setKmsCheckpoint(rr.getCheckpoint().getChkKm());
+                        mm.setTemps(rr.getRegTemps());
+                    }
+                    mm.setCheckpoint(mm.getCheckpoint() + 1);
+                }
+            }
+            // Si no s'ha trobat cap participant amb la mateixa id, l'afeigeixo
+            if(participantTrobat == 0) {
+                String nomParticipant = "";
+                for(Participant p : totsElsParticipants) {
+                    if(p.getId() == idParticipant) nomParticipant = p.getNom() + " " + p.getCognoms();
+                }
+                lFinal.add(new ModelMillorResultatParticipant(idParticipant, nomParticipant, rr.getInscripcio().getInsDorsal().toString(), 1, rr.getCheckpoint().getChkKm(), rr.getRegTemps()));
+            }
+        }
+        return lFinal;
+    }
+
+    private List<ResultsRegistre> filtrarPerCircuitICategoria(List<ResultsRegistre> results) {
+        List<ResultsRegistre> aux = new ArrayList<>();
+        for (ResultsRegistre rr : results) {
+//            if(rr.getInscripcio().getInsCccId() == ccc_id) {
+//                aux.add(rr);
+//            }
+            if(rr.getCheckpoint().getChkCirId() == cir_id) {
+                aux.add(rr);
+            }
+        }
+        return aux;
     }
 
     static List<ModelMillorResultatParticipant> ordenarLlista(List<ModelMillorResultatParticipant> lista) {
@@ -94,84 +196,11 @@ public class ThreadBackground {
         return lista;
     }
 
-    private List<ModelMillorResultatParticipant> ordenarfiltrarRes(List<ResultsCircuitCategorium> results) {
-        List<ModelMillorResultatParticipant> resultatsSenseOrdenar = new ArrayList<>();
-        List<ModelMillorResultatParticipant> resultats = new ArrayList<>();
-
-//        // Els retirats no s'han de mostrar
-//        List<ResultsInscripcion> inscripcionsSenseRetirats = eliminarRetirats(results);
-//
-//        // Cada iteració són les dades de UNA persona
-//        resultatsSenseOrdenar = millorResultatsPerPersona(inscripcionsSenseRetirats);
-//
-//        // Ordenar la llista
-//        resultats = ordenarLlista(resultatsSenseOrdenar);
-//
-        return null;
-    }
-
-    private static List<ModelMillorResultatParticipant> millorResultatsPerPersona(List<Resultsnscripcion> inscripcionsSenseRetirats) {
-        List<ModelMillorResultatParticipant> resultats = new ArrayList<>();
-
-        Map<Integer, List<Registres>> registrees = registres.stream().collect(Collectors.groupingBy(Registro::getTipus()));
-        for (Resultsnscripcion ri : inscripcionsSenseRetirats) {
-//            String nom = ri.get + " " + ri.getParticipant().getParCognoms();
-            String dorsal = ri.getInsDorsal().toString();
-
-            Double majorNCheckpoint = 0.0;
-            String reg_temps = "";
-            Double kms = 0.0;
-            int i = 0;
-            for (ResultsRegistre rr : ri.getRegistres()) {
-                if(rr.getCheckpoint().getChkKm() > kms) {
-                    majorNCheckpoint = rr.getCheckpoint().getChkKm();
-                    reg_temps = rr.getRegTemps();
-                    kms = rr.getCheckpoint().getChkKm();
-                    i++;
-                }
-            }
-
-            if(majorNCheckpoint > 0) {
-                resultats.add(new ModelMillorResultatParticipant(nom, dorsal, i, kms, reg_temps));
-            }
-        }
-
-        return resultats;
-    }
-
-//    private static List<Re> eliminarRetirats(ResultsResponse results) {
-//        List<ResultsInscripcion> noRetirats = new ArrayList<>();
-//        for(ResultsInscripcion ri : results.getInscripcions()) {
-//            if (ri.getInsRetirat() != 1) noRetirats.add(ri);
-//        }
-//
-//        return noRetirats;
-//    }
 
     public void stop() {
         scheduler.shutdown();
     }
 
-
-    private static List<ModelMillorResultatParticipant> filtraResultats(List<ResultsCircuitCategorium> lCircuitCategoria, int carreraId, int idCategoria, int idCircuito) {
-
-        List<ModelMillorResultatParticipant> lFinal = new ArrayList<>();
-
-        for (int i = 0; i < lCircuitCategoria.size(); i++) {
-            ResultsCircuit rsCircuit = lCircuitCategoria.get(i).getCircuit();
-            ResultsCategoria rsCategoria = lCircuitCategoria.get(i).getCategoria();
-
-            int cirId = rsCircuit.getCirId();
-            int catId = rsCategoria.getCatId();
-
-            if (idCategoria == catId && idCircuito == cirId) {
-                List<Resultsnscripcion> inscripcions = lCircuitCategoria.get(i).getInscripcions();
-                List<ModelMillorResultatParticipant> resSenseOrdenar = millorResultatsPerPersona(inscripcions);
-            }
-        }
-
-        return lFinal;
-    }
 }
 
 

@@ -87,8 +87,9 @@ public class resultatsFragment
 
         int cat_id = Integer.parseInt(categoria_id);
         int cir_id = Integer.parseInt(circuit_id);
+        int ccc_int_id = Integer.parseInt(ccc_id);
 
-        ThreadBackground thBack = new ThreadBackground(cat_id, cir_id, this);
+        ThreadBackground thBack = new ThreadBackground(cat_id, cir_id, ccc_int_id, this);
         thBack.start();
 
 

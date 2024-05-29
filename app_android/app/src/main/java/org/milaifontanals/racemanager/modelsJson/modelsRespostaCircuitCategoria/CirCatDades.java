@@ -1,12 +1,12 @@
+package org.milaifontanals.racemanager.modelsJson.modelsRespostaCircuitCategoria;
 
-package org.milaifontanals.racemanager.modelsJson.modelsRespostaResultats;
-
-import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class ResultsCircuitCategorium {
+import org.milaifontanals.racemanager.modelsJson.Categoria;
+import org.milaifontanals.racemanager.modelsJson.Circuit;
 
+public class CirCatDades {
     @SerializedName("ccc_id")
     @Expose
     private Integer cccId;
@@ -18,13 +18,10 @@ public class ResultsCircuitCategorium {
     private Integer cccCirId;
     @SerializedName("circuit")
     @Expose
-    private ResultsCircuit circuit;
+    private Circuit circuit;
     @SerializedName("categoria")
     @Expose
-    private ResultsCategoria categoria;
-    @SerializedName("inscripcions")
-    @Expose
-    private List<Resultsnscripcion> resultsnscripcions;
+    private Categoria categoria;
 
     public Integer getCccId() {
         return cccId;
@@ -50,28 +47,19 @@ public class ResultsCircuitCategorium {
         this.cccCirId = cccCirId;
     }
 
-    public ResultsCircuit getCircuit() {
+    public Circuit getCircuit() {
         return circuit;
     }
 
-    public void setCircuit(ResultsCircuit circuit) {
+    public void setCircuit(Circuit circuit) {
         this.circuit = circuit;
     }
 
-    public ResultsCategoria getCategoria() {
+    public Categoria getCategoria() {
         return categoria;
     }
 
-    public void setCategoria(ResultsCategoria categoria) {
+    public void setCategoria(Categoria categoria) {
         this.categoria = categoria;
     }
-
-    public List<Resultsnscripcion> getInscripcions() {
-        return resultsnscripcions;
-    }
-
-    public void setInscripcions(List<Resultsnscripcion> resultsnscripcions) {
-        this.resultsnscripcions = resultsnscripcions;
-    }
-
 }

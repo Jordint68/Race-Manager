@@ -4,8 +4,7 @@ package org.milaifontanals.racemanager.modelsJson.modelsRespostaResultats;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-
-public class Resultsnscripcion {
+public class ResultsInscripcio {
 
     @SerializedName("ins_id")
     @Expose

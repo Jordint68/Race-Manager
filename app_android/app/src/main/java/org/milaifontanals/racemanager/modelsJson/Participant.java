@@ -7,7 +7,6 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 
 public class Participant {
-
     @SerializedName("par_id")
     @Expose
     private int id;
@@ -106,5 +105,9 @@ public class Participant {
 
     public void setEs_federat(Boolean es_federat) {
         this.es_federat = es_federat;
+    }
+
+    public int getId() {
+        return id;
     }
 }
